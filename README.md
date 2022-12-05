@@ -169,14 +169,31 @@ but there is no redoing the rota.
 
 Shifts are assigned, but can be dropped by either party. shifts cant be updated to add someone, they can just use whatsapp. Again this isn't an Event-Managment app. It does one thing (if that).
 
+But yeah it's not quite done yet
 
 
 
 # General Stuff
-I wanted to make everything super functional but doing with while everything with asyncronous was just to annoying.
-
-
-
+I wanted to make everything super functional but doing with while everything with asyncronous was just to annoying. I basically just encapulated flow control in Generic and Enumerable <Generic> extensions. For example:
+  
+  list<int> result = await someDatabaselistValue
+ 
+  if(result is null)
+    return an Empty list<int>()
+ --- becomes ---
+  return result.ResultOrEmpty()
+  
+  
+  
+  RabbitMq is set up pretty much just to carry a creat or delete command to the other databases, with along with the global Id for each user. 
+  
+  
+  ah jeez what else.
+  
+ oh yeah, theres a lot that is configured but not implemented, so JWT works, but havent yet put the [Authorize] attributes on the api controllers, sorta trivial stuff.
+same with response cacheing, middleware modelstate validation, it's all there though.
+  
+  There are inconsistenties though, like i feel (btw if it hasn't come across, please know, that I know, that still know fuck all about good design) there bits that     could be tighter, consistent naming conventions, more sensible folder structures, etc. idk, once i finish it, and finish documenting it, I'll worry about that.
 
 
 
