@@ -1,5 +1,7 @@
 If you're not Matt or Rach go away
 
+It was also 2am when I wrote this so expect many spelling errors and non-sensical paragraph structure
+
 # What it is
 A only social-media like app, the aim of which is connect bouncers with clubs etc who need to source them, with the app acting as a mediator, with some other things. 
 (I was a bouncer in uni and it really is a huge issue, the jist is that the industry standard for sourcing is essentially a wild west)
