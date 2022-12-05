@@ -95,7 +95,33 @@ The profile is what is presented to other users. A bio, days they are available,
 
 obvs these searches are done via a query string (I made a class for that, does pageing etc), as dappers input is just a string of sql, I made a Class that dynamically builds a sql query and appends the search terms where applicable.
 
-It's a bit of shitshow I won't lie. I'm almost embarressed. It does work, I unit tested it and every thing (also theres no actual user string input so now sql injection), but idk, I did look arpund couldn't find an obvious way to do it better, if it wasn't performant I might just rewrite it in C.
+It's a bit of shitshow I won't lie. I'm almost embarressed. It does work, I unit tested it and every thing (also theres no actual user string input so now sql injection), but idk, I did look around couldn't find an obvious way to do it better, if it wasn't performent I might just rewrite it in C.
+
+Something I am proud of in the GeoLocation feature. A user puts in there PostCode and that is converted into coordinates and put in the Database. Well Not really...
+Reverse geoding requires like a Bing maps api or something, I tried to sign up but I think you have to be an actual company, at the very least they are ratelimited, and as this is a toy app I though it was an unessesary hurdle.
+Instead, i made a class that makes polygon with an upper and lower bound of lat and long with encomposs the greater london area. "Updating" your location basically just generate a random set of coordiates. 
+
+When you search, you specify the range from yourself, which it then compares to the coordinates of the search results, and filters those out of range. 
+
+## Rota/Messages/Contracts
+
+So I've grouped these projects mainly on dependancies, and respective concerns. Accounts uses EFCore, Profile uses Dapper.
+these service all use both Redis and Neo4j in combination.
+I've used redis as a db rather than a cache.
+
+From what I understand about graph dbs, they're awesome at two things, ManyToMany relationships, and traversal across related data (aka, "find me all of the people who are friends with the friends of alice", would seriously tax sql, but would be trival for a graph). But I also understand they're not optimised for actually storing lots of data on the nodes themselves. 
+
+So basically where needed I've stored some identifer of data on the graph, and the values themselves in redis.
+For example:
+*node*     *relationship*
+ (JeanClaudeVannDamme{Id:JcvdId})<- Message_Thread -> (Bob{Id:BobId}) <- Message_Thread -> (Alice{Id:AliceId})
+
+query: get all the ids, from the nodes connected via a Message_Thread, to the node whos Id = BobId
+returns: [AliceId, JcvdId]
+
+
+
+
 
 
 
