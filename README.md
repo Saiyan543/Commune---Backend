@@ -63,16 +63,20 @@ Theres more I could say but i'm sure you're thoroughly convinced.
 
 ## TECH
 
-So I origonally did microservices, but it felt a bit stupid because there was so much duplicated code. Which obviously makes sense for teams of devs but it just kinda pointless. Didn't want to do a classical monolyth though, so I researched and found something called virtual-slice architecture   
+So I origonally did microservices, but it felt a bit stupid because there was so much duplicated code. Which obviously makes sense for teams of devs but it just kinda pointless. Didn't want to do a classical monolyth though, so I researched and found something called virtual-slice architecture https://www.youtube.com/watch?v=lsddiYwWaOQ&t=471s
+basically within a single project file, multiple sub projects, but keep them decoupled (at least temporally). So they'd all shared dependancies like an Error handler, or authorisation logic, but keep stuff like Database dependancies seperate. Still Onion style:
+
+Project
+ - Global dependancies, Functional classes
+ - SubProject A - (Controllers => Services => Repository)
+ - SubProject B - (Controllers => Services => Repository)
+ - SubProject C - (Controllers => Services => Repository)
 
 
 
+Mine has split into 3
 
-
-
-
-
-
+# Accounts
 
 
 
