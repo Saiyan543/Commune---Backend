@@ -77,6 +77,33 @@ Project
 Mine has split into 3
 
 # Accounts
+Uses and ORM called EntityFrameworkCore, microsofts baby. its slow as shit but has great tools built-in identity management.
+Auth is done with JWT and refresh tokens
+
+Pretty much stores email, password, Tokens, etc. Private info between a user and the app.
+it's also the, how do I say? like it's the source of truth?. Registering and deleting an account sends a messages to cascade through other databases respectively (via rabbitMq)
+
+if(account deleted == success){
+  publish message(location:Profile, action:delete, GlobalUserId:your_mum)
+  publish message(location:Contracts, action:delete, GlobalUserId:your_mum)
+}
+
+# Profile
+Uses the micro ORM dapper, it's a fast boi, requires raw sql and parameterised queries. I made an extension made extension methods for it (and Neo4j) that cut down the code duplication considerablly. 
+
+The profile is what is presented to other users. A bio, days they are available, and really not much else. There was other things like "Months of experience" i've yet to add but wouldn't be hard.
+
+obvs these searches are done via a query string (I made a class for that, does pageing etc), as dappers input is just a string of sql, I made a Class that dynamically builds a sql query and appends the search terms where applicable.
+
+It's a bit of shitshow I won't lie. I'm almost embarressed. It does work, I unit tested it and every thing (also theres no actual user string input so now sql injection), but idk, I did look arpund couldn't find an obvious way to do it better, if it wasn't performant I might just rewrite it in C.
+
+
+
+
+
+
+# General Stuff
+I wanted to make everything super functional but doing with while everything with asyncronous was just to annoying.
 
 
 
