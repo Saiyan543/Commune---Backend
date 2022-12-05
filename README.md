@@ -1,5 +1,4 @@
-
-Matt, this is just a rough explanation.
+If you're not Matt or Rach go away
 
 # What it is
 A only social-media like app, the aim of which is connect bouncers with clubs etc who need to source them, with the app acting as a mediator, with some other things. 
