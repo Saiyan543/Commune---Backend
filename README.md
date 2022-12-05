@@ -116,14 +116,58 @@ For example:
 *node*     *relationship*
  (JeanClaudeVannDamme{Id:JcvdId})<- Message_Thread -> (Bob{Id:BobId}) <- Message_Thread -> (Alice{Id:AliceId})
 
-query: get all the ids, from the nodes connected via a Message_Thread, to the node whos Id = BobId
+query: get all the ids, from the nodes connected via a Message_Thread, to the node whos Id = BobId.
 returns: [AliceId, JcvdId]
 
+With the ids, go to redis and get message threads stored at messagePrefix+id1+id2
+
+It's kinda convoluted ngl, but it doesn mean that there is only one copy of the Message thread that both parties have access to.
+There is undoubtly better ways to do it I admit.
+
+
+# Messages
+
+Opted not to go for signlR, this isn't a chat app, it's aimed solving at a very narrow business problem. Realistically, the only utility of messages are just to get each others whatapps, after vetting the other person is sane enough to offer such. Thus real-time communication seemed a bit ott. Honestly one gripe I have about a lot of everyday software like apps, is that they have way to many features, I downloaded a pomdoro timer the other day, and it came with a fucking manual. Bro all I wanted was a clock.
+
+MongoDb would be a more traditional choice, but redis can be used as a db and the only action is to append a message onto a list, I think it does the job. Also I couldn't be asked to learn 5th database. 
+
+Moreover, message threads are emphemeral (doubt i spelled that right), they really would just be used to get a whatsapp, number, so there is no utility storing them longer than a month.
+
+Flow is this:
+
+partyA sends message request =>
+  other party responds (accepted/rejected/block) =>
+    if the formost, now they can send messages
+
+
+      
+
+# Contracts
+
+pretty basic crud, all on the Neo4j.
+request contract =>
+  confirm/deny => 
+    get contracts
+    delete contract etc etc
 
 
 
+# Rota
 
+This isn't finished. I know what to do but its i just cba.
 
+a hosted services on a one day timer calls the main function to delete the outdated shift, add a new rota day X days from now, and form a new shift for everyone.
+
+A bouncer will specifiy the upcoming days they want to work (defaulting to none), and the max start and end times.
+A club will do the same-ish, additionally specifiying personal needed, etc.
+
+the users can change these up until the day the rota is made.
+the values of each are used to make the rotas.
+
+obvs bouncers can pull out, updatin there status on an assigned shift, or clubs can kick them.
+but there is no redoing the rota.
+
+Shifts are assigned, but can be dropped by either party. shifts cant be updated to add someone, they can just use whatsapp. Again this isn't an Event-Managment app. It does one thing (if that).
 
 
 
