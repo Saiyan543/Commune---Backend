@@ -43,8 +43,6 @@ The way in which my system tries to solve this is quite subtle. It doesn't direc
 # to sum up the problem
 Clubs continuely short of bouncers, so they accept anything agencies throw at them, due to the quality, clubs have a continual rotating door of bouncers, and cling on to dear life to the good ones.
 
-# f
-
 Essentially, the solution is for clubs who geographically grouped to share security on one large rota, and on shifts coordinate as such.
 
 I was a part of a system like this when I worked in Bath, where one agency pretty much had a monopoly on the centre (and were actually decent guys), we were assigned a club, but had a communal radio, protocals to converge on a place if it was needed. And guys to who scout the town warning us about "tall guy, arsenel shirt, bald. he was doing coke in the alley, said he was coming to his missus".
