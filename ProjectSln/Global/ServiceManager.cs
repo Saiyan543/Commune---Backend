@@ -58,10 +58,8 @@ namespace Main.Global
         public IAccountService Account => _account.Value;
         public IAuthenticationService Authentication => _authentication.Value;
         public IProfileService Profile => _profile.Value;
-
         public IMessageService Message => _message.Value;
         public IRotaService Rota => _rota.Value;
-
         public IContractService Contract => _contract.Value;
     }
 

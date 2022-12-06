@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Homestead.Global.Library.ApiController.Responses;
 using Main.Global.Helpers;
 using Main.Global.Helpers.Location;
 using Main.Global.Helpers.Location.Coordinates;

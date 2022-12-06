@@ -1,5 +1,6 @@
-﻿using Homestead.Slices.Rota.Dependencies.Neo4J.Options;
+﻿
 using Main.Slices.Rota.Dependencies.Neo4J;
+using Main.Slices.Rota.Dependencies.Neo4J.Options;
 
 namespace Main.Slices.Rota.Dependencies.Neo4J.Extensions
 {

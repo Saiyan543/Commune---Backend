@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Homestead.Global.Library.RabbitMQ.Messages;
-using Homestead.Global.Models;
 using Main.Global.Library.AutoMapper;
 using Main.Global.Library.RabbitMQ;
+using Main.Global.Library.RabbitMQ.Messages;
+using Main.Global.Models;
 using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
 using Main.Slices.Accounts.Dependencies.IdentityCore.Context;
 using Main.Slices.Accounts.Models.Dtos.In;

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Homestead.Global.Library.ApiController.Responses;
-using Homestead.Global.Library.ApiController.Responses.ConcreteResponses;
 using Main.Global.Library.ApiController.Responses;
+using Main.Global.Library.ApiController.Responses.ConcreteResponses;
 using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
 using Main.Slices.Accounts.Dependencies.Jwt.Configuration.Models.Dtos;
 using Main.Slices.Accounts.Dependencies.Jwt.Configuration.Options;

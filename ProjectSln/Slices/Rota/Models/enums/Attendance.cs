@@ -6,4 +6,11 @@
         Confirmed,
         Unconfirmed
     }
+
+    public enum EventStatus
+    {
+        Ok,
+        Cancelled,
+
+    }
 }
