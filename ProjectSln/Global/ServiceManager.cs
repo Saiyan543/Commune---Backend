@@ -5,8 +5,8 @@ using Homestead.Slices.Rota.Services;
 using Homestead.Slices.Rota.Services.Contract;
 using Homestead.Slices.Rota.Services.Rota;
 using Main.Global.Library.RabbitMQ;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
 using Main.Slices.Accounts.Dependencies.IdentityCore.Context;
+using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
 using Main.Slices.Accounts.Services.Account;
 using Main.Slices.Accounts.Services.Authentication;
 using Main.Slices.Discovery.DapperOrm.Context;
@@ -38,21 +38,21 @@ namespace Main.Global
             IConfiguration configuration,
             DapperContext searchCtx,
             IPublisher publisher,
-            IDatabase redis
+            IDatabase redis     
             )
         {
             _account = new Lazy<IAccountService>(() =>
-                new AccountService(mapper, userManager, idpCtx, publisher));
+                new AccountService(logger, userManager, idpCtx, publisher));
             _authentication = new Lazy<IAuthenticationService>(() =>
-                new AuthenticationService(mapper, userManager, logger, configuration));
+                new AuthenticationService(userManager, logger, configuration));
             _profile = new Lazy<IProfileService>(() =>
-                new ProfileService(mapper, searchCtx));
+                new ProfileService(logger, mapper, searchCtx));
             _message = new Lazy<IMessageService>(() =>
-                new MessageService(redis, Driver.Neo4jDriver));
+                new MessageService(logger, redis, Driver.Neo4jDriver));
             _rota = new Lazy<IRotaService>(() =>
-                new RotaService(redis, Driver.Neo4jDriver));
+                new RotaService(logger, redis, Driver.Neo4jDriver));
             _contract = new Lazy<IContractService>(() =>
-                new ContractService(Driver.Neo4jDriver));
+                new ContractService(logger, Driver.Neo4jDriver));
         }
 
         public IAccountService Account => _account.Value;

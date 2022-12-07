@@ -1,6 +1,5 @@
-﻿
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Roles;
+﻿using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Roles;
+using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

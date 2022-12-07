@@ -1,5 +1,5 @@
-﻿using Main.Slices.Rota.Models.Dtos.In;
-using Main.Slices.Rota.Models.Dtos.Out;
+﻿using Main.Slices.Rota.Models.Dtos;
+using Main.Slices.Rota.Models.Dtos.In;
 
 namespace Main.Slices.Rota.Services.Message
 {

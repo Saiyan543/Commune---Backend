@@ -2,12 +2,13 @@
 using Main.Slices.Rota.Dependencies.Neo4J.Extensions;
 using Main.Slices.Rota.Dependencies.Redis.Extensions;
 using Main.Slices.Rota.Models.Db;
+using Main.Slices.Rota.Models.Dtos;
 using Main.Slices.Rota.Models.Dtos.In;
-using Main.Slices.Rota.Models.Dtos.Out;
 using Main.Slices.Rota.Services.Message;
 using Microsoft.IdentityModel.Tokens;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using System.Xml.Linq;
 
 namespace Homestead.Slices.Rota.Services.Contract
 {
@@ -50,7 +51,7 @@ namespace Homestead.Slices.Rota.Services.Contract
             {
                 list.Add(
                     new MessageThreadDto(
-                        messageLists.ElementAt(i).Select(x => JsonConvert.DeserializeObject<MessageDto>(x)),
+                        messageLists.ElementAt(i).Select(x => x.Deserialize<MessageDto>()),
                         locations.ElementAt(i).Id,
                         locations.ElementAt(i).Name));
             }

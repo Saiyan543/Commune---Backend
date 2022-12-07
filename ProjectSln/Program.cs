@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using Main.Global;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.GlobalExceptionHandling.Extensions;
@@ -40,11 +41,11 @@ internal class Program
         builder.Services.ConfigureRabbitMqPublisher();
         builder.Services.ConfigureRabbitMqSubscribers();
 
-       
+
         builder.Services.ConfigureIConnectionMultiplexor(builder.Configuration);
 
         builder.Services.ConfigureNeo4jDatabase(builder.Configuration);
-       
+       builder.Services.ConfigureRateLimitingOptions();
         builder.Services.AddMemoryCache();
         builder.Services.AddHttpContextAccessor();
 
@@ -54,7 +55,7 @@ internal class Program
         });
         builder.Services.AddScoped<ValidateModelStateFilter>();
         builder.Services.AddScoped<ValidateMediaTypeFilter>();
-
+        builder.Services.AddScoped<RedisCacheFilter>();
         builder.Services.AddAuthentication();
        
         builder.Services.AddControllers(config =>
@@ -77,6 +78,7 @@ internal class Program
             ForwardedHeaders = ForwardedHeaders.All
         });
         app.UseHttpsRedirection();
+        app.UseIpRateLimiting();
         app.UseResponseCaching();
         app.UseHttpCacheHeaders();
 

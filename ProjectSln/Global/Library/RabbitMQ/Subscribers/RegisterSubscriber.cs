@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Main.Global;
+using Main.Global.Helpers;
 using Main.Global.Library.RabbitMQ;
 using Main.Global.Library.RabbitMQ.Messages;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace Main.Global.Library.RabbitMQ.Subscribers
 
         protected override async Task ProcessEvent(string notificationMessage)
         {
-            var content = JsonConvert.DeserializeObject<Register>(notificationMessage);
+            var content = notificationMessage.Deserialize<Register>();
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("ProfileId", content.ProfileId, System.Data.DbType.String);
@@ -27,6 +28,7 @@ namespace Main.Global.Library.RabbitMQ.Subscribers
                 var services = scope.ServiceProvider.GetRequiredService<IServiceManager>();
                 await services.Profile.InitialiseProfile(parameters, parameters, parameters);
                 await services.Contract.InitialiseNode(content.ProfileId, content.UserName, content.Role);
+                await services.Rota.InitialiseRota(content.ProfileId, content.Role);
             }
         }
     }

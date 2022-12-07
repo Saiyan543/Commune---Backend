@@ -2,11 +2,11 @@
 using Main.Global.Helpers;
 using Main.Global.Library.ApiController.Responses;
 using Main.Global.Library.AutoMapper;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.Dtos;
 using Main.Slices.Accounts.Dependencies.IdentityCore.Context;
 using Main.Slices.Accounts.Dependencies.IdentityCore.Extensions;
-using Main.Slices.Accounts.Models.Dtos.Out;
+using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
+using Main.Slices.Accounts.Models.Dtos;
+using Main.Slices.Accounts.Models.Responses;
 using Main.Slices.Accounts.Services.Account;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,7 +28,7 @@ namespace Homestead.Slices.Accounts.Services.Account
         {
             var result = await _userManager.FindByIdAsync(id);
             if (result is null)
-                return new NotFoundResponse();
+                return new AccountNotFoundResponse(id);
             return new Response<UserAccountDto>(result.Map<User, UserAccountDto>());
         }
     }

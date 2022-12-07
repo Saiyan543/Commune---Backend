@@ -2,7 +2,7 @@
 
 namespace Main.Global.Library.RabbitMQ.Messages
 {
-    public class Register : BaseMessage
+    public sealed class Register : BaseMessage
     {
         public Register(string id, string username, string type)
             : base(Constants.Homestead, Constants.Register)

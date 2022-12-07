@@ -42,7 +42,7 @@ namespace Main.Slices.Rota.Dependencies.Neo4J.Extensions
             }
         }
 
-        public static async Task RunAsync(this IDriver driver, params Func<IAsyncQueryRunner, Task>[] command)
+        public static async Task Transaction(this IDriver driver, params Func<IAsyncQueryRunner, Task>[] command)
         {
             using (var session = driver.AsyncSession(ConfigBuilder => ConfigBuilder.WithDatabase(db)))
             {
@@ -55,5 +55,6 @@ namespace Main.Slices.Rota.Dependencies.Neo4J.Extensions
                 });
             }
         }
+
     }
 }

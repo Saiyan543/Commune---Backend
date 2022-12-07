@@ -1,6 +1,6 @@
 ﻿namespace Main.Global.Helpers.Querying.Paging
 {
-    public record PageData
+    public sealed record PageData
     {
         public int TotalCount { get; set; }
         public int PageSize { get; set; }

@@ -16,7 +16,7 @@ namespace Main.Slices.Rota.Dependencies.Redis.Extensions
             await trans.ExecuteAsync();
         }
 
-        public static T RedisDeserialize<T>(this RedisValue value)
+        public static T Deserialize<T>(this RedisValue value)
         {
             if (value == RedisValue.Null)
             {
@@ -25,7 +25,7 @@ namespace Main.Slices.Rota.Dependencies.Redis.Extensions
             return JsonConvert.DeserializeObject<T>(value);
         }
 
-        public static IEnumerable<T> RedisDeserialize<T>(this RedisValue[] values)
+        public static IEnumerable<T> Deserialize<T>(this RedisValue[] values)
         {
             List<T> ss = new();
             foreach (var val in values)

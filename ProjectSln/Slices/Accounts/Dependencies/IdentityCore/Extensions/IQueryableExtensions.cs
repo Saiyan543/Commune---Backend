@@ -1,4 +1,4 @@
-﻿using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
+﻿using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
 
 namespace Main.Slices.Accounts.Dependencies.IdentityCore.Extensions
 {

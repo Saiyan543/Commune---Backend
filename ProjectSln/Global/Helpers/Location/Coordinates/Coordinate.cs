@@ -1,6 +1,6 @@
 ﻿namespace Main.Global.Helpers.Location.Coordinates
 {
-    public class Coordinate
+    public sealed class Coordinate
     {
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }

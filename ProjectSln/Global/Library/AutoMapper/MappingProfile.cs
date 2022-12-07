@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
-using Main.Slices.Accounts.Models.Dtos.In;
-using Main.Slices.Accounts.Models.Dtos.Out;
-using Main.Slices.Discovery.Models.Dtos.Db;
-using Main.Slices.Discovery.Models.Dtos.Out;
+using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
+using Main.Slices.Accounts.Models.Dtos;
+using Main.Slices.Discovery.Models.Dtos;
+
 
 namespace Main.Global.Library.AutoMapper
 {
-    public class MappingProfile : Profile
+    public sealed class MappingProfile : Profile
     {
         public MappingProfile()
         {
             CreateMap<UserForRegistrationDto, User>().ReverseMap();
             CreateMap<UserForUpdateDto, User>().ReverseMap();
             CreateMap<UserAccountDto, User>().ReverseMap();
-            CreateMap<ProfileDto, ProfileDbModel>().ReverseMap();
-            CreateMap<SearchProfileDto, ProfileDbModel>().ReverseMap();
+            CreateMap<ProfileDto, ProfileDb>().ReverseMap();
+            //CreateMap<SearchProfileDto, ProfileDb>().ReverseMap();
         }
     }
 }

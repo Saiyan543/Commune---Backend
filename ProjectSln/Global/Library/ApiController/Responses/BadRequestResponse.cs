@@ -1,6 +1,6 @@
 ﻿namespace Main.Global.Library.ApiController.Responses
 {
-    public class BadRequestResponse : BaseResponse
+    public abstract class BadRequestResponse : BaseResponse
     {
         public string Message { get; set; }
 

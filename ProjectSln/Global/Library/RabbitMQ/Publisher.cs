@@ -16,7 +16,7 @@ namespace Main.Global.Library.RabbitMQ
         void Publish(BaseMessage message);
     }
 
-    public class Publisher : IPublisher, IDisposable
+    public sealed class Publisher : IPublisher, IDisposable
     {
         private IConnection _connection;
         private IModel _channel;

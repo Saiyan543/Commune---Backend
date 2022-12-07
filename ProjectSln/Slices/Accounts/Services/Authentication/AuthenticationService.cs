@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Main.Global.Library.ApiController.Responses;
-using Main.Global.Library.ApiController.Responses.ConcreteResponses;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels;
+using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
 using Main.Slices.Accounts.Dependencies.Jwt.Configuration.Models.Dtos;
 using Main.Slices.Accounts.Dependencies.Jwt.Configuration.Options;
+using Main.Slices.Accounts.Models.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,17 +15,16 @@ namespace Main.Slices.Accounts.Services.Authentication
 {
     public sealed class AuthenticationService : IAuthenticationService
     {
-        private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly JwtOptions _jwtOptions;
         private readonly Serilog.ILogger _logger;
         private User? _user;
         private string JwtSecret = "sEcretlOlooooloolol";//Environment.GetEnvironmentVariable("JwtSecret");
 
-        public AuthenticationService(IMapper mapper,
+        public AuthenticationService(
             UserManager<User> userManager, Serilog.ILogger logger, IConfiguration configuration)
         {
-            _mapper = mapper;
+
             _userManager = userManager;
 
             _jwtOptions = new JwtOptions();
@@ -76,7 +75,7 @@ namespace Main.Slices.Accounts.Services.Authentication
                user.RefreshTokenExpiryTime <= DateTime.UtcNow)
                 return new RefreshTokenExpiredResponse(user.RefreshTokenExpiryTime);
 
-            _user = user; // otherwise user is null lol
+            _user = user; 
 
             var token = await CreateToken(populateExp: false);
             return new Response<TokenDto>(token);
@@ -116,6 +115,7 @@ namespace Main.Slices.Accounts.Services.Authentication
                 if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase))
                 {
+                    _logger.Warning($"{nameof(GetPrincipalFromExpiredToken)}: Token Refresh failed. Invalid Token Format. {token}");
                     throw new SecurityTokenException("Invalid token");
                 }
 

@@ -1,6 +1,6 @@
 ﻿namespace Main.Global.Helpers.Querying.Uri
 {
-    public record ValueFilter
+    public sealed record ValueFilter
     {
         public string? Field { get; set; }
 

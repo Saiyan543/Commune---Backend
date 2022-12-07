@@ -7,10 +7,10 @@ namespace Homestead.Slices.Rota.Services
     public partial class ContractService : IContractService
     {
         private readonly IDriver _driver;
+        private readonly Serilog.ILogger _logger;
+        public ContractService(Serilog.ILogger logger, IDriver driver) { _driver = driver; _logger = logger; }
 
-        public ContractService(IDriver driver) => _driver = driver;
-
-        public async Task SendContractRequest(string actorId, string targetId) =>
+            public async Task SendContractRequest(string actorId, string targetId) =>
                 await _driver.RunAsync("MATCH (a:User{id:$actorId}) MATCH (b:User{id:$targetId}) MERGE (a)-[:Contract{status:'pending'}]-(b)", new { actorId = actorId, targetId = targetId });
 
         public async Task RespondToContractRequest(string actorId, string targetId, string response) =>

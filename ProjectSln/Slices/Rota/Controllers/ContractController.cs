@@ -1,11 +1,15 @@
 ﻿using Main.Global;
+using Main.Global.Library.ActionFilters;
 using Main.Slices.Rota.Models.Dtos.In;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Main.Slices.Rota.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ResponseCache(CacheProfileName = "120SecondsDuration")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     public class ContractController : ControllerBase
     {
         private readonly IServiceManager _services;
@@ -13,6 +17,8 @@ namespace Main.Slices.Rota.Controllers
         public ContractController(IServiceManager services) => _services = services;
 
         [HttpGet]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> RetrieveContracts([FromQuery] string id)
         {
             var result = await _services.Contract.RetrieveContracts(id);
@@ -21,6 +27,8 @@ namespace Main.Slices.Rota.Controllers
 
         [HttpGet]
         [Route("requests")]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> RetrieveContractRequests([FromQuery] string id)
         {
             var result = await _services.Contract.RetrieveContractRequests(id);
@@ -28,6 +36,7 @@ namespace Main.Slices.Rota.Controllers
         }
 
         [HttpPut("{actorId}/{targetId}")]
+        [ServiceFilter(typeof(ValidateModelStateFilter))]
         public async Task<IActionResult> RespondToContractRequest(string actorId, string targetId, [FromBody] ContractRequestResponse dto)
         {
             if (dto.Response == string.Empty)

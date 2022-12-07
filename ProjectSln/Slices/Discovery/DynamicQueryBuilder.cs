@@ -16,7 +16,7 @@ namespace Main.Slices.Discovery
                 new StringBuilder().Append(SELECT)
                 ).ToString().Replace("  ", " ").Trim();
 
-        public static StringBuilder Order(bool anyBools, bool anyComparisons, string[] bools, ValueFilter[] conditions, StringBuilder sb) =>
+        private static StringBuilder Order(bool anyBools, bool anyComparisons, string[] bools, ValueFilter[] conditions, StringBuilder sb) =>
              (anyBools, anyComparisons) switch
              {
                  (true, true) => NoPrePend(conditions, ValueCondition, PrePend(bools, BoolCondition, sb)),
@@ -25,22 +25,22 @@ namespace Main.Slices.Discovery
                  _ => sb
              };
 
-        public static StringBuilder NoPrePend<T>(T[] strArr, Func<T, string> operation, StringBuilder sb)
+        private static StringBuilder NoPrePend<T>(T[] strArr, Func<T, string> operation, StringBuilder sb)
         {
             for (int i = 1; i < strArr.Length; i++)
                 sb.Append(" AND " + operation(strArr[i]));
             return sb;
         }
 
-        public static StringBuilder PrePend<T>(T[] strArr, Func<T, string> operation, StringBuilder sb)
+        private static StringBuilder PrePend<T>(T[] strArr, Func<T, string> operation, StringBuilder sb)
         {
-            sb.Append("WHERE " + operation(strArr[0]));
+            sb.Append(" WHERE " + operation(strArr[0]));
             for (int i = 1; i < strArr.Length; i++)
                 sb.Append(" AND " + operation(strArr[i]));
             return sb;
         }
 
-        public static Func<string, string> BoolCondition = (field) =>
+        private static Func<string, string> BoolCondition = (field) =>
         field.Trim().ToLower() switch
         {
             "m" => "d.Monday = TRUE",
@@ -57,7 +57,7 @@ namespace Main.Slices.Discovery
             _ => throw new ArgumentException("Invalid field")
         };
 
-        public static Func<ValueFilter, string> ValueCondition = (filter) =>
+        private static Func<ValueFilter, string> ValueCondition = (filter) =>
             filter.Field.Trim().ToLower() switch
             {
                 "monthsofexperience" => "b.MonthsOfExperience " + filter.Operator + " " + filter.Value + " ",

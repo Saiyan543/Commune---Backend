@@ -47,12 +47,12 @@
 //            var securityRotas = await _redis
 //                .HashGetAsync("", DateTime.UtcNow.AddDays(7).ToString())
 //                .ContinueWith(x => x.Result
-//                .RedisDeserialize<IEnumerable<SecurityRotaModel>>());
+//                .Deserialize<IEnumerable<SecurityRotaModel>>());
 
 //            var clubRotas = await _redis
 //                .HashGetAsync("", DateTime.UtcNow.AddDays(7).ToString())
 //                .ContinueWith(x => x.Result
-//                .RedisDeserialize<IEnumerable<ClubRotaModel>>());
+//                .Deserialize<IEnumerable<ClubRotaModel>>());
 
 
 

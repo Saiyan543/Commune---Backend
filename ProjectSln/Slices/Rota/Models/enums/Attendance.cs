@@ -3,14 +3,11 @@
 
     public enum Attendance
     {
-        Confirmed,
-        Unconfirmed
-    }
-
-    public enum EventStatus
-    {
-        Ok,
-        Cancelled,
+        Unconfirmed = 0,
+        Null = 1,
+        Confirmed = 2,
+        Declined = 3,
 
     }
+
 }

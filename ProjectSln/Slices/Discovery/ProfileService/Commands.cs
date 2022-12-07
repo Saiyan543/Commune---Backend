@@ -3,7 +3,7 @@ using Dapper;
 using Main.Global.Helpers.Location.Coordinates;
 using Main.Slices.Discovery.DapperOrm.Context;
 using Main.Slices.Discovery.DapperOrm.Extensions;
-using Main.Slices.Discovery.Models.Dtos.In;
+using Main.Slices.Discovery.Models.Dtos;
 using Main.Slices.Discovery.ProfileService;
 using System.Data;
 
@@ -13,11 +13,13 @@ namespace Homestead.Slices.Discovery.ProfileService
     {
         private readonly IMapper _mapper;
         private readonly DapperContext _context;
+        private readonly Serilog.ILogger _logger;
 
-        public ProfileService(IMapper mapper, DapperContext context)
+        public ProfileService(Serilog.ILogger logger, IMapper mapper, DapperContext context)
         {
             _mapper = mapper;
             _context = context;
+            _logger = logger;
         }
 
         public async Task UpdateLocation(string id, Coordinate coordinate) =>
@@ -29,7 +31,7 @@ namespace Homestead.Slices.Discovery.ProfileService
                     ("Longitude", coordinate.Longitude, DbType.Double),
                     ("ProfileId", id, DbType.String)));
 
-        public async Task UpdateProfile(string id, ProfileForManipulationDto dto) =>
+        public async Task UpdateProfile(string id, ProfileDto dto) =>
             await _context.RunAsync(
                 @"UPDATE Profile
                 SET ActivelyLooking = @ActivelyLooking, ShowInSearch = @ShowInSearch, Bio = @Bio
@@ -40,7 +42,7 @@ namespace Homestead.Slices.Discovery.ProfileService
                     ("ShowInSearch", dto.ShowInSearch, DbType.Boolean),
                     ("ActivelyLooking", dto.ActivelyLooking, DbType.Boolean)));
 
-        public async Task UpdateDays(string id, DaysForManipulationDto dto) =>
+        public async Task UpdateDays(string id, DaysDto dto) =>
             await _context.RunAsync(
                     @"UPDATE Days SET
                     Monday = @Monday,

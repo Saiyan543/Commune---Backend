@@ -14,11 +14,13 @@ namespace Homestead.Slices.Rota.Services.Contract
     {
         private readonly IDatabase _redis;
         private readonly IDriver _driver;
+        private readonly Serilog.ILogger _logger;
 
-        public MessageService(IDatabase redis, IDriver driver)
+        public MessageService(Serilog.ILogger logger, IDatabase redis, IDriver driver)
         {
             _redis = redis;
             _driver = driver;
+            _logger = logger;
         }
 
         private const string MessagePrefix = "message";
@@ -28,7 +30,7 @@ namespace Homestead.Slices.Rota.Services.Contract
             string key = Keys.OrdinalKey(actorId, targetId, MessagePrefix);
             if (await _redis
             .KeyExistsAsync(key))
-                await _redis.ListRightPushAsync(key, JsonConvert.SerializeObject(message));
+                await _redis.ListRightPushAsync(key, message.Serialize());
         }
 
         public async Task SendMessageRequest(string actorId, string targetId, string message)
@@ -42,7 +44,7 @@ namespace Homestead.Slices.Rota.Services.Contract
 
             if (!await _redis
                 .KeyExistsAsync(key))
-                await _redis.ListRightPushAsync(key, JsonConvert.SerializeObject(new MessageDto(actorId, message, DateTime.UtcNow)));
+                await _redis.ListRightPushAsync(key, new MessageDto(actorId, message, DateTime.UtcNow).Serialize());
         }
 
         public async Task RespondToMessageRequest(string actorId, string targetId, MessageRequestResponse response)

@@ -1,4 +1,4 @@
-﻿using Main.Slices.Rota.Models.Dtos.Out;
+﻿using Main.Slices.Rota.Models.Dtos;
 
 namespace Main.Slices.Rota.Services.Contract
 {
@@ -7,7 +7,6 @@ namespace Main.Slices.Rota.Services.Contract
         Task DeleteContract(string actorId, string targetId);
 
         Task DeleteNode(string id);
-
         Task InitialiseNode(string id, string name, string role);
 
         Task RespondToContractRequest(string actorId, string targetId, string response);

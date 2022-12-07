@@ -13,85 +13,96 @@ namespace Main.Slices.Rota.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+  //  [Authorize(AuthenticationSchemes = "Bearer")]
     public class RotaController : ControllerBase
     {
         private readonly IServiceManager _services;
         public RotaController(IServiceManager services) => _services = services;
 
-        
-        [HttpGet]
-        [Route("scheduled")]
-        public async Task<IActionResult> GetScheduled([FromQuery]string id)
-        {
-            return Ok(await _services.Rota.GetSchedule<SecurityUpcomingRota>(id));
-        }
-
 
         [HttpGet]
-        [Route("shifts")]
-        public async Task<IActionResult> GetShifts([FromQuery] string id)
+        [Route("scheduled/security")]
+        public async Task<IActionResult> GetScheduled([FromQuery] string id)
         {
-            return Ok(await _services.Rota.GetShifts<ShiftModel>(id));
-        }
-        
-
-        [HttpPut]
-        [Route("schedule/{id}")]
-        public async Task<IActionResult> UpdateSchedule(string id, [FromBody] UpcomingRota dto)
-        {
-            await _services.Rota.ManipulateSchedule(id, dto);
-            return Ok();
+            return Ok(await _services.Rota.GetSchedule<RetrieveSecurityUp>(id));
         }
 
-
-        [HttpPut]
-        [Route("schedule/{id}")]
-        public async Task<IActionResult> UpdateShift(string id, [FromBody] UpdateShiftDto dto)
+        [HttpGet]
+        [Route("scheduled/club")]
+        public async Task<IActionResult> GetScheduledClub([FromQuery] string id)
         {
-            await _services.Rota.ClubManipulateShifts(id, dto.Start, (x) => { x.Status = dto.status; return x; });
-            return Ok();
+            return Ok(await _services.Rota.GetSchedule<RetrieveClubUp>(id));
+        }
+        [HttpPut("schedule/security/{id}")]
+        public async Task<IActionResult> UpdateScheduleSec(string id, [FromBody] SecurityUpcomingRota dto)
+        {
+            await _services.Rota.ManipulateSchedule(id, dto.Start, dto.Serialize());
+            return NoContent();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // --- Controls
-
-        [HttpPost("control/{id}")]
-        public async Task<IActionResult> Init(string id)
+        [HttpPut("schedule/club/{id}")]
+        public async Task<IActionResult> UpdateSchedule(string id, [FromBody] ClubUpcomingRota dto)
         {
-            await _services.Rota.InitialiseRota(id);
-
-            return Ok();
-        }
-
-        [HttpDelete("control/{id}")]
-        public async Task<IActionResult> Del(string id)
-        {
-
-            await _services.Rota.DeleteRota(id);
+            await _services.Rota.ManipulateSchedule(id, dto.Start, dto.Serialize());
             return NoContent();
         }
 
 
-        [HttpPut("control/{id}")]
-        public async Task<IActionResult> Inc(string id)
+        [HttpGet]
+        [Route("shifts/security")]
+        public async Task<IActionResult> GetShifts([FromQuery] string id)
         {
+            return Ok(await _services.Rota.GetSecurityShifts(id));
+        }
 
-            await _services.Rota.Increment(id);
+
+
+        [HttpGet]
+        [Route("shifts/club")]
+        public async Task<IActionResult> GetShiftss([FromQuery] string id)
+        {
+            return Ok(await _services.Rota.GetClubShifts(id));
+        }
+
+
+        [HttpPut("shifts/{id}")]
+        public async Task<IActionResult> UpdateShift(string id, [FromBody] UpdateShiftDto dto)
+        {
+            await _services.Rota.UpdateShiftDetails(id, dto);
+            return Ok();
+        }
+
+        [HttpPut("shifts/attendance/{id}")]
+        public async Task<IActionResult> UpdateSecurityShift(string id, [FromBody] UpdatePersonelAttendanceDto dto)
+        {
+            await _services.Rota.SecurityUpdateAttendance(id, dto);
+
+            return Ok();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         //--- Controls
+
+        
+
+        [HttpPut("control")]
+        public async Task<IActionResult> Inc()
+        {
+            await _services.Rota.X();
             return NoContent();
         }
     }

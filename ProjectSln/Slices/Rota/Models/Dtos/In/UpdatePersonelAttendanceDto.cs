@@ -4,16 +4,21 @@ namespace Main.Slices.Rota.Models.Dtos.In
 {
     public record class UpdatePersonelAttendanceDto
     {
-        public UpdatePersonelAttendanceDto(string RotaId, string SecurityId, Attendance Attendance)
+        public UpdatePersonelAttendanceDto(string RotaId, int AttendanceId)
         {
             this.RotaId = RotaId;
-            this.SecurityId = SecurityId;
-            this.Attendance = Attendance;
+            this.AttendanceId = AttendanceId;
         }
 
         public string RotaId { get; init; }
-        public string SecurityId { get; init; }
-        public Attendance Attendance { get; set; }
+        public int AttendanceId { get; set; }
+
+        public Attendance AttendanceOut() => AttendanceId switch
+        {
+            1 => Attendance.Unconfirmed,
+            2 => Attendance.Confirmed,
+            _ => throw new InvalidOperationException()
+        };
 
     }
 }

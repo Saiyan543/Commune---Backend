@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using Main.Global.Helpers.Location.Coordinates;
 using Main.Global.Library.ApiController.Responses;
-using Main.Slices.Discovery.Models.Dtos.In;
-using Main.Slices.Discovery.Models.Dtos.Out;
+using Main.Slices.Discovery.Models.Dtos;
+
 
 namespace Main.Slices.Discovery.ProfileService
 {
@@ -16,12 +16,12 @@ namespace Main.Slices.Discovery.ProfileService
 
         Task<BaseResponse> GetProfile(string id);
 
-        Task<IEnumerable<SearchProfileDto>> Search(double range, string sql, Coordinate coordinateFrom);
+        Task<IEnumerable<ProfileView>> Search(double range, string sql, Coordinate coordinateFrom);
 
-        Task UpdateDays(string id, DaysForManipulationDto inDto);
+        Task UpdateDays(string id, DaysDto dto);
 
-        Task UpdateLocation(string id, Coordinate inDto);
+        Task UpdateLocation(string id, Coordinate dto);
 
-        Task UpdateProfile(string id, ProfileForManipulationDto inDto);
+        Task UpdateProfile(string id, ProfileDto dto);
     }
 }

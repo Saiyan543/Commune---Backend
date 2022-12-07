@@ -2,7 +2,7 @@
 
 namespace Main.Global.Library.RabbitMQ.Messages
 {
-    public class Delete : BaseMessage
+    public sealed class Delete : BaseMessage
     {
         public Delete(string id)
             : base(Constants.Homestead, Constants.DeleteQueue)

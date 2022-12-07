@@ -1,13 +1,13 @@
 ﻿namespace Main.Global.Library.ApiController.Responses
 {
-    public class NotFoundResponse : BaseResponse
+    public abstract class NotFoundResponse : BaseResponse
     {
         public string Message { get; set; }
 
-        public NotFoundResponse()
+        public NotFoundResponse(string message)
             : base(false)
         {
-            Message = $"Not Found";
+            Message = message;
         }
     }
 }

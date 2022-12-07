@@ -22,7 +22,7 @@ namespace Homestead.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Homestead.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", b =>
+            modelBuilder.Entity("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -130,22 +130,22 @@ namespace Homestead.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3004ed71-43f8-40f3-be91-260a386ac6e5",
-                            ConcurrencyStamp = "90950605-798f-4dfd-abc9-51d3dc107d91",
+                            Id = "0b38c7cf-f3ba-4cd5-945c-d0e425a77740",
+                            ConcurrencyStamp = "6ffda52d-278c-422d-ac12-8fa1abd0dccc",
                             Name = "Security",
                             NormalizedName = "SECURITY"
                         },
                         new
                         {
-                            Id = "396fc235-737b-4ec0-ab5b-0d25234bf513",
-                            ConcurrencyStamp = "353b7c30-3a40-4475-b8ea-281bf846186f",
-                            Name = "Company",
-                            NormalizedName = "COMPANY"
+                            Id = "aabe682e-5ee0-4f2c-add7-8f6309795a58",
+                            ConcurrencyStamp = "b011d71a-775d-4e0e-ae4f-25f5487f3548",
+                            Name = "Club",
+                            NormalizedName = "CLUB"
                         },
                         new
                         {
-                            Id = "5698f7b5-0306-48e4-841b-2504e8662e29",
-                            ConcurrencyStamp = "abf0a091-590e-46bb-a6e5-c71b2b5ede13",
+                            Id = "d122d7ad-1c96-43f8-98ba-cb1999250044",
+                            ConcurrencyStamp = "af14ad72-eadd-466b-93e4-936520185121",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -268,7 +268,7 @@ namespace Homestead.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Homestead.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,7 +277,7 @@ namespace Homestead.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Homestead.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +292,7 @@ namespace Homestead.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Homestead.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,7 +301,7 @@ namespace Homestead.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Homestead.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

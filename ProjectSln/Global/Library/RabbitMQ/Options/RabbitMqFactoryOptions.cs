@@ -1,6 +1,6 @@
 ﻿namespace Main.Global.Library.RabbitMQ.Options
 {
-    public record RabbitMqFactoryOptions
+    public sealed record RabbitMqFactoryOptions
     {
         public string? Username { get; set; }
 

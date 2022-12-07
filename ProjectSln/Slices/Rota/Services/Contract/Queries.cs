@@ -1,6 +1,6 @@
 ﻿using Main.Global.Helpers;
 using Main.Slices.Rota.Dependencies.Neo4J.Extensions;
-using Main.Slices.Rota.Models.Dtos.Out;
+using Main.Slices.Rota.Models.Dtos;
 using Main.Slices.Rota.Services.Contract;
 using Neo4j.Driver;
 
