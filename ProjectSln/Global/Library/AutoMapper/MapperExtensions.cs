@@ -2,9 +2,10 @@
 
 namespace Main.Global.Library.AutoMapper
 {
-    public  static class MapperExtensions
+    public static class MapperExtensions
     {
         private static IMapper _mapper;
+
         static MapperExtensions()
         {
             _mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
@@ -18,8 +19,6 @@ namespace Main.Global.Library.AutoMapper
             => _mapper.Map<IEnumerable<TOut>>(source);
 
         public static TOut Map<TIn, TOut>(this TIn? source, TOut end)
-            =>   _mapper.Map(source, end);
-
-
+            => _mapper.Map(source, end);
     }
 }

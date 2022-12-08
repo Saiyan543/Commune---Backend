@@ -4,12 +4,12 @@ using Main.Global.Library.ActionFilters;
 using Main.Global.Library.GlobalExceptionHandling.Extensions;
 using Main.Global.Library.MediaTypes;
 using Main.Global.Library.RabbitMQ.Extensions;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Extensions;
-using Main.Slices.Accounts.Dependencies.Jwt.Extensions;
+using Main.Slices.Accounts.EntityFramework_Jwt.Extensions;
 using Main.Slices.Discovery.DapperOrm;
 using Main.Slices.Discovery.DapperOrm.Extensions;
-using Main.Slices.Rota.Dependencies.Neo4J.Extensions;
-using Main.Slices.Rota.Dependencies.Redis.Extensions;
+using Main.Slices.Rota;
+using Main.Slices.Rota.Neo4J.Extensions;
+using Main.Slices.Rota.Redis.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,32 +20,30 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddScoped<IServiceManager, ServiceManager>();
+        builder.Services.AddScoped<IDailyRotaUpdate, DailyRotaUpdate>();
+        builder.Services.AddHostedService<RepeatingService>();
 
-  
         builder.Services.ConfigureCors(builder.Configuration);
         builder.Services.ConfigureSerilogSeq(builder.Configuration);
         builder.Services.AddAutoMapper(typeof(Program));
         builder.Services.ConfigureIISIntegration();
-        
+
         builder.Services.AddResponseCaching();
         builder.Services.ConfigureHttpCacheHeaders();
-        
-
 
         builder.Services.ConfigureDapper(builder.Configuration);
-       
+
         builder.Services.ConfigureJwt(builder.Configuration);
         builder.Services.ConfigureEFCoreSqlServer(builder.Configuration);
         builder.Services.ConfigureIdentityStores();
-        
+
         builder.Services.ConfigureRabbitMqPublisher();
         builder.Services.ConfigureRabbitMqSubscribers();
-
 
         builder.Services.ConfigureIConnectionMultiplexor(builder.Configuration);
 
         builder.Services.ConfigureNeo4jDatabase(builder.Configuration);
-       builder.Services.ConfigureRateLimitingOptions();
+        builder.Services.ConfigureRateLimitingOptions();
         builder.Services.AddMemoryCache();
         builder.Services.AddHttpContextAccessor();
 
@@ -57,7 +55,7 @@ internal class Program
         builder.Services.AddScoped<ValidateMediaTypeFilter>();
         builder.Services.AddScoped<RedisCacheFilter>();
         builder.Services.AddAuthentication();
-       
+
         builder.Services.AddControllers(config =>
         {
             config.RespectBrowserAcceptHeader = true;

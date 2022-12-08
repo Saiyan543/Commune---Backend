@@ -1,5 +1,4 @@
-﻿
-using Main.Global.Library.ApiController.Responses;
+﻿using Main.Global.Library.ApiController.Responses;
 using Main.Global.Library.GlobalExceptionHandling;
 using Microsoft.AspNetCore.Mvc;
 

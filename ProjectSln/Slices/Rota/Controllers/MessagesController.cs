@@ -1,7 +1,7 @@
 ﻿using Main.Global;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
-using Main.Slices.Rota.Models.Dtos.In;
+using Main.Slices.Rota.Models.Messages;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +10,12 @@ namespace Main.Slices.Rota.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [ResponseCache(CacheProfileName = "120SecondsDuration")]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
-    public class MessagesController : ApiControllerBase
+    public sealed class MessagesController : ApiControllerBase
     {
         private readonly IServiceManager _services;
+
         public MessagesController(IServiceManager services) => _services = services;
-        
+
         [HttpGet]
         [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
         [HttpCacheValidation(MustRevalidate = true)]
@@ -37,7 +37,7 @@ namespace Main.Slices.Rota.Controllers
 
         [HttpPut("request/respond/{actorId}/{targetId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> RespondToRequest(string actorId, string targetId, [FromBody] MessageRequestResponse response)
+        public async Task<IActionResult> RespondToRequest(string actorId, string targetId, [FromBody] MessageRequestResponseDto response)
         {
             if (response.Response == string.Empty)
                 return BadRequest("Invalid Response");

@@ -1,10 +1,7 @@
-﻿
-using Main.Global;
+﻿using Main.Global;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
-using Main.Slices.Accounts.Dependencies.Jwt.Configuration.Models.Dtos;
 using Main.Slices.Accounts.Models.Dtos;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Main.Slices.Accounts.Controllers
@@ -23,18 +20,18 @@ namespace Main.Slices.Accounts.Controllers
             _configuration = configuration;
             _logger = logger;
         }
+
         [HttpPost]
         [Route("admin")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
         public async Task<IActionResult> RegisterAdminAccount([FromBody] AdminForRegistrationDto dto)
         {
-
             if (dto.AdminPassword != _configuration["AdminPassword"])
             {
                 _logger.Warning($"Invalid Administrative Register Attempt: {dto.Email}");
-                return BadRequest("Invalid password for Administrative registration.");         
-            }         
-                  
+                return BadRequest("Invalid password for Administrative registration.");
+            }
+
             var result = await _services.Account.RegisterUser(dto, "Admin");
             if (!result.Succeeded)
             {
@@ -67,7 +64,6 @@ namespace Main.Slices.Accounts.Controllers
             return StatusCode(201);
         }
 
-        
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> AuthenticateUser([FromBody] UserForAuthenticationDto dto)

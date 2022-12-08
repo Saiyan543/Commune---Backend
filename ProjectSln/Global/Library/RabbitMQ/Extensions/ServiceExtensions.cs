@@ -1,5 +1,4 @@
-﻿using Main.Global.Library.RabbitMQ;
-using Main.Global.Library.RabbitMQ.Subscribers;
+﻿using Main.Global.Library.RabbitMQ.Subscribers;
 
 namespace Main.Global.Library.RabbitMQ.Extensions
 {

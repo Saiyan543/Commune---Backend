@@ -7,6 +7,5 @@ namespace Main.Slices.Accounts.Models.Responses
         public AccountNotFoundResponse(string id)
             : base($"Account with Id: {id} Not found. Time: {DateTime.UtcNow}")
         { }
-
     }
 }

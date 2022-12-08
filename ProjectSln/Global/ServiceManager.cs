@@ -1,22 +1,13 @@
-﻿using AutoMapper;
-using Homestead.Slices.Accounts.Services.Account;
-using Homestead.Slices.Discovery.ProfileService;
+﻿using Homestead.Slices.Accounts.Services.Account;
 using Homestead.Slices.Rota.Services;
-using Homestead.Slices.Rota.Services.Contract;
-using Homestead.Slices.Rota.Services.Rota;
 using Main.Global.Library.RabbitMQ;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Context;
-using Main.Slices.Accounts.Dependencies.IdentityCore.Models;
-using Main.Slices.Accounts.Services.Account;
-using Main.Slices.Accounts.Services.Authentication;
+using Main.Slices.Accounts.EntityFramework_Jwt;
+using Main.Slices.Accounts.Services;
+using Main.Slices.Discovery;
 using Main.Slices.Discovery.DapperOrm.Context;
-using Main.Slices.Discovery.ProfileService;
-using Main.Slices.Rota.Dependencies.Neo4J;
-using Main.Slices.Rota.Services.Contract;
-using Main.Slices.Rota.Services.Message;
-using Main.Slices.Rota.Services.Rota;
+using Main.Slices.Rota.Neo4J;
+using Main.Slices.Rota.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
 
 namespace Main.Global
@@ -31,14 +22,13 @@ namespace Main.Global
         private readonly Lazy<IContractService> _contract;
 
         public ServiceManager(
-            IMapper mapper,
             IdentityContext idpCtx,
             UserManager<User> userManager,
             Serilog.ILogger logger,
             IConfiguration configuration,
             DapperContext searchCtx,
             IPublisher publisher,
-            IDatabase redis     
+            IDatabase redis
             )
         {
             _account = new Lazy<IAccountService>(() =>
@@ -46,7 +36,7 @@ namespace Main.Global
             _authentication = new Lazy<IAuthenticationService>(() =>
                 new AuthenticationService(userManager, logger, configuration));
             _profile = new Lazy<IProfileService>(() =>
-                new ProfileService(logger, mapper, searchCtx));
+                new ProfileService(logger, searchCtx));
             _message = new Lazy<IMessageService>(() =>
                 new MessageService(logger, redis, Driver.Neo4jDriver));
             _rota = new Lazy<IRotaService>(() =>

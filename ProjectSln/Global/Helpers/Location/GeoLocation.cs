@@ -6,6 +6,7 @@ namespace Main.Global.Helpers.Location
     public static class GeoLocation
     {
         private static Polygon Area;
+
         static GeoLocation()
         {
             Coordinate Chesham = new Coordinate(51.70190397403934, -0.6077561976064242);

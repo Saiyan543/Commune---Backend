@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Main.Slices.Discovery.Models.Dtos
+﻿namespace Main.Slices.Discovery.Models.Dtos
 {
     public record ProfileDto
     {

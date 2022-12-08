@@ -2,6 +2,7 @@
 {
     public record ProfileDb
     {
+        public string UserName { get; init; } = string.Empty;
         public bool ShowInSearch { get; init; }
         public bool ActivelyLooking { get; init; }
         public string Bio { get; init; } = string.Empty;

@@ -1,6 +1,4 @@
-﻿using Main.Global.Helpers.Location;
-
-namespace Main.Global.Helpers.Location.Coordinates
+﻿namespace Main.Global.Helpers.Location.Coordinates
 {
     public static class CoordinatesDistanceExtensions
     {

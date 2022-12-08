@@ -1,6 +1,6 @@
 ﻿using Main.Global;
 using Main.Global.Library.ActionFilters;
-using Main.Slices.Rota.Models.Dtos.In;
+using Main.Slices.Rota.Models.Contracts;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +9,7 @@ namespace Main.Slices.Rota.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ResponseCache(CacheProfileName = "120SecondsDuration")]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
-    public class ContractController : ControllerBase
+    public sealed class ContractController : ControllerBase
     {
         private readonly IServiceManager _services;
 
@@ -37,7 +36,7 @@ namespace Main.Slices.Rota.Controllers
 
         [HttpPut("{actorId}/{targetId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> RespondToContractRequest(string actorId, string targetId, [FromBody] ContractRequestResponse dto)
+        public async Task<IActionResult> RespondToContractRequest(string actorId, string targetId, [FromBody] ContractRequestResponseDto dto)
         {
             if (dto.Response == string.Empty)
                 return BadRequest("Invalid Response");

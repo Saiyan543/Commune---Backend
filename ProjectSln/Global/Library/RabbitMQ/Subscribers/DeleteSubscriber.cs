@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Main.Global.Helpers;
 using Main.Global.Library.RabbitMQ.Messages;
-using Newtonsoft.Json;
 
 namespace Main.Global.Library.RabbitMQ.Subscribers
 {
@@ -14,7 +13,7 @@ namespace Main.Global.Library.RabbitMQ.Subscribers
 
         protected override async Task ProcessEvent(string notificationMessage)
         {
-            var content = notificationMessage.Deserialize<Delete>();
+            var content = notificationMessage.Deserialize<DeleteMessage>();
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("ProfileId", content.ProfileId, System.Data.DbType.String);

@@ -1,21 +1,21 @@
 ﻿namespace Main.Slices.Discovery.Models.Dtos
 {
-    public struct PostCodeDto
+    public record struct PostcodeDto
     {
-        public string PostCode { get; init; }
+        public string Value { get; init; }
 
-        public PostCodeDto(string PostCode)
+        public PostcodeDto(string PostCode)
         {
-            this.PostCode = PostCode;
+            this.Value = PostCode;
         }
 
-        public bool ValidatePostCode()
+        public bool ValidatePostCode() // proxy for real validation
         {
-            if (string.IsNullOrEmpty(PostCode))
+            if (string.IsNullOrEmpty(Value))
                 return false;
-            if (PostCode.Length > 8 && PostCode.Length < 6)
+            if (Value.Length > 8 && Value.Length < 6)
                 return false;
-            if (!PostCode.Contains(" "))
+            if (!Value.Contains(" "))
                 return false;
             return true;
         }

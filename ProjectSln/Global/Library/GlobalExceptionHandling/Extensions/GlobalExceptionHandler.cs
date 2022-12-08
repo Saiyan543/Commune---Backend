@@ -1,5 +1,4 @@
-﻿
-using Main.Global.Library.GlobalExceptionHandling.Exceptions;
+﻿using Main.Global.Library.GlobalExceptionHandling.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 

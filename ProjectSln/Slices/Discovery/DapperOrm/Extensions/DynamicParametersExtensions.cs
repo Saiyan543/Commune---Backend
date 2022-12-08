@@ -9,6 +9,7 @@ namespace Main.Slices.Discovery.DapperOrm.Extensions
         {
             foreach (var val in vals)
                 parameters.Add(val.Item1, val.Item2, val.Item3);
+            // name, value, type
 
             return parameters;
         }

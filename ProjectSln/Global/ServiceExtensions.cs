@@ -1,7 +1,5 @@
 ﻿using AspNetCoreRateLimit;
 using Marvin.Cache.Headers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Serilog;
 
 namespace Main.Global
@@ -33,6 +31,7 @@ namespace Main.Global
         services.Configure<IISOptions>(options =>
             {
             });
+
         public static void ConfigureHttpCacheHeaders(this IServiceCollection services) =>
             services.AddHttpCacheHeaders((expirationOpt) =>
             {
@@ -43,7 +42,6 @@ namespace Main.Global
             {
                 validationOpt.MustRevalidate = true;
             });
-
 
         public static void ConfigureRateLimitingOptions(this IServiceCollection services)
         {
@@ -63,6 +61,5 @@ namespace Main.Global
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
         }
-
     }
 }

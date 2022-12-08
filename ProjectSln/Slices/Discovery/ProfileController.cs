@@ -5,19 +5,15 @@ using Main.Global.Helpers.Location.Coordinates;
 using Main.Global.Helpers.Querying.Paging;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
-using Main.Slices.Discovery.Models;
 using Main.Slices.Discovery.Models.Dtos;
-using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Main.Slices.Discovery
 {
     [Route("api/[controller]")]
     [ApiController]
     [ResponseCache(CacheProfileName = "120SecondsDuration")]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
-    public class ProfileController : ApiControllerBase
+    public sealed class ProfileController : ApiControllerBase
     {
         private readonly IServiceManager _services;
 
@@ -26,26 +22,27 @@ namespace Main.Slices.Discovery
         [HttpGet]
         public async Task<IActionResult> GetProfile([FromQuery] string id)
         {
-            var baseResult = await _services.Profile.GetProfile(id);
-            if (!baseResult.Success)
-                return ProcessError(baseResult);
+            var result = await _services.Profile.GetProfile(id);
+            if (!result.Success)
+                return ProcessError(result);
 
-            return Ok(baseResult.GetResult<ProfileDto>());
+            return Ok(result.GetResult<(ProfileView, PostcodeDto)>().ToTuple());
         }
 
         [HttpGet]
         [Route("search")]
-        [ServiceFilter(typeof(RedisCacheFilter))]
+        //      [ServiceFilter(typeof(RedisCacheFilter))]
         [ServiceFilter(typeof(ValidateMediaTypeFilter))]
         public async Task<IActionResult> SearchProfiles([FromQuery] string id, [FromQuery] ProfileSearchDto dto)
         {
-            var baseResult = await _services.Profile.GetCoordinates(id);
-            if (!baseResult.Success)
-                return ProcessError(baseResult);
-            string sql = DynamicQueryBuilder.Build(dto.Comparisons.ToArray(), dto.SplitBools());
-            var profiles = await _services.Profile.Search(dto.Range != default ? dto.Range : 5, sql, baseResult.GetResult<Coordinate>());
+            var result = await _services.Profile.GetCoordinates(id);
+            if (!result.Success)
+                return ProcessError(result);
 
-            var paged = PagedResults<Object>.Page(profiles, dto.PageNumber, dto.PageSize);
+            string sql = DynamicQueryBuilder.Build(dto.Comparisons.ToArray(), dto.SplitBools());
+            var profiles = await _services.Profile.Search(dto.Range != default ? dto.Range : 5, sql, result.GetResult<Coordinate>());
+
+            var paged = PagedResults<ProfileView>.Page(profiles, dto.PageNumber, dto.PageSize);
             Response.Headers.Add("X-Page", paged.MetaData.Serialize());
 
             return Ok(paged);
@@ -68,11 +65,12 @@ namespace Main.Slices.Discovery
         }
 
         [HttpPut("location/{id}")]
-        public async Task<IActionResult> UpdateLocation(string id, [FromBody] PostCodeDto dto)
+        [ServiceFilter(typeof(ValidateModelStateFilter))]
+        public async Task<IActionResult> UpdateLocation(string id, [FromBody] PostcodeDto dto)
         {
             if (!dto.ValidatePostCode())
                 return BadRequest("Invalid Postcode");
-            await _services.Profile.UpdateLocation(id, GeoLocation.GetCoordinateFromPostCode(dto.PostCode));
+            await _services.Profile.UpdateLocation(id, GeoLocation.GetCoordinateFromPostCode(dto.Value));
             return NoContent();
         }
     }

@@ -12,6 +12,7 @@ namespace Main.Global.Helpers
 
         public static T? Deserialize<T>(this string source) =>
             JsonConvert.DeserializeObject<T>(source);
+
         public static string? Serialize<T>(this T source) =>
             JsonConvert.SerializeObject(source);
 
@@ -23,22 +24,6 @@ namespace Main.Global.Helpers
 
         public static IEnumerable<T>? Next<T>(this IEnumerable<T>? source, Func<IEnumerable<T>?, IEnumerable<T>> operation)
              => operation(source);
-        //public static void Sequence<T>(this IEnumerable<T>? source, Action<T> operation)
-        //    => operation(source);
-
-        public static IEnumerable<T> Sequence<T>(this IEnumerable<T>? source, params Func<List<T>, List<T>>[] operations)
-        {
-            var s1 = operations[0](source.ToList());
-            
-            for(int i = 1; i < operations.Length; i++)
-            {
-                var s2 = operations[i](s1);
-                s1 = s2;
-            }
-
-            return s1;
-           
-        }
 
         public static TOut? Transfer<TIn, TOut>(this TIn? source, Func<TIn?, TOut> mapping) =>
             mapping(source);
@@ -48,27 +33,5 @@ namespace Main.Global.Helpers
 
         public static IEnumerable<T> ResultOrEmpty<T>(this IEnumerable<T>? source)
             => source is not null ? source : Enumerable.Empty<T>();
-
-
-
-
-
-        public static IEnumerable<T>? Foreach<T>(this IEnumerable<T> source, Func<T, T> func)
-        {
-            foreach (var item in source)
-            {
-                yield return func(item);
-            }
-        }
-
-        public static async Task<IEnumerable<T>>? Foreach<T>(this IEnumerable<T> source, Func<T, Task<T>> func)
-        {
-            List<T> s = new();
-            foreach (var item in source)
-            {
-                 s.Add(await func(item));
-            }
-            return s;
-        }
     }
 }

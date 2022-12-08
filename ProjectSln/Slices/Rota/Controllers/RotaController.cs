@@ -1,108 +1,76 @@
-﻿using Homestead.Slices.Rota.Services.Rota;
-using Main.Global;
+﻿using Main.Global;
 using Main.Global.Helpers;
-using Main.Global.Library.AutoMapper;
-using Main.Slices.Rota.Models.Base;
-using Main.Slices.Rota.Models.Db;
-using Main.Slices.Rota.Models.Dtos.In;
-using Microsoft.AspNetCore.Http;
+using Main.Slices.Rota.Models.Rota;
 using Microsoft.AspNetCore.Mvc;
-using static Homestead.Slices.Rota.Services.Rota.RotaService;
 
 namespace Main.Slices.Rota.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize(AuthenticationSchemes = "Bearer")]
-    public class RotaController : ControllerBase
+    public sealed class RotaController : ControllerBase
     {
         private readonly IServiceManager _services;
-        public RotaController(IServiceManager services) => _services = services;
 
+        public RotaController(IServiceManager services) => _services = services;
 
         [HttpGet]
         [Route("scheduled/security")]
         public async Task<IActionResult> GetScheduled([FromQuery] string id)
         {
-            return Ok(await _services.Rota.GetSchedule<RetrieveSecurityUp>(id));
+            var result = await _services.Rota.GetSchedule<Schedule_Security>(id);
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("scheduled/club")]
         public async Task<IActionResult> GetScheduledClub([FromQuery] string id)
         {
-            return Ok(await _services.Rota.GetSchedule<RetrieveClubUp>(id));
+            var result = await _services.Rota.GetSchedule<Schedule_Club>(id);
+            return Ok(result);
         }
+
         [HttpPut("schedule/security/{id}")]
-        public async Task<IActionResult> UpdateScheduleSec(string id, [FromBody] SecurityUpcomingRota dto)
+        public async Task<IActionResult> UpdateScheduleSec(string id, [FromBody] Schedule_Security dto)
         {
-            await _services.Rota.ManipulateSchedule(id, dto.Start, dto.Serialize());
+            await _services.Rota.ManipulateSchedule(id, dto.Start.Value, dto.Serialize());
             return NoContent();
         }
 
         [HttpPut("schedule/club/{id}")]
-        public async Task<IActionResult> UpdateSchedule(string id, [FromBody] ClubUpcomingRota dto)
+        public async Task<IActionResult> UpdateSchedule(string id, [FromBody] Schedule_Club dto)
         {
-            await _services.Rota.ManipulateSchedule(id, dto.Start, dto.Serialize());
+            await _services.Rota.ManipulateSchedule(id, dto.Start.Value, dto.Serialize());
             return NoContent();
         }
-
 
         [HttpGet]
         [Route("shifts/security")]
         public async Task<IActionResult> GetShifts([FromQuery] string id)
         {
-            return Ok(await _services.Rota.GetSecurityShifts(id));
+            var result = await _services.Rota.GetSecurityShifts(id);
+            return Ok(result);
         }
-
-
 
         [HttpGet]
         [Route("shifts/club")]
         public async Task<IActionResult> GetShiftss([FromQuery] string id)
         {
-            return Ok(await _services.Rota.GetClubShifts(id));
+            var result = await _services.Rota.GetClubShifts(id);
+            return Ok(result);
         }
-
 
         [HttpPut("shifts/{id}")]
         public async Task<IActionResult> UpdateShift(string id, [FromBody] UpdateShiftDto dto)
         {
             await _services.Rota.UpdateShiftDetails(id, dto);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPut("shifts/attendance/{id}")]
-        public async Task<IActionResult> UpdateSecurityShift(string id, [FromBody] UpdatePersonelAttendanceDto dto)
+        public async Task<IActionResult> UpdateShiftPersonel(string id, [FromBody] UpdateAttendanceDto dto)
         {
-            await _services.Rota.SecurityUpdateAttendance(id, dto);
+            await _services.Rota.UpdateAttendance(id, dto);
 
-            return Ok();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         //--- Controls
-
-        
-
-        [HttpPut("control")]
-        public async Task<IActionResult> Inc()
-        {
-            await _services.Rota.X();
             return NoContent();
         }
     }

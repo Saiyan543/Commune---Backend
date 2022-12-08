@@ -1,5 +1,4 @@
-﻿
-using Main.Global.Library.MediaTypes.Csv;
+﻿using Main.Global.Library.MediaTypes.Csv;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
