@@ -1,6 +1,6 @@
 ﻿using Main.Global.Helpers;
+using Main.Redis.Extensions;
 using Main.Slices.Discovery.Models.Dtos;
-using Main.Slices.Rota.Redis.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using StackExchange.Redis;

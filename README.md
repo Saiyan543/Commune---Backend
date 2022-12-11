@@ -1,6 +1,4 @@
-If you're not Matt or Rach go away
 
-It was also 2am when I wrote this so expect many spelling errors and non-sensical paragraph structure
 
 # Basic Outline
 A social-media like app, the aim of which is connect bouncers with clubs (for shifts), with the app acting as a mediator, with some other things. 

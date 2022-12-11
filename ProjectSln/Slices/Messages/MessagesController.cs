@@ -1,11 +1,12 @@
 ﻿using Main.Global;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
-using Main.Slices.Rota.Models.Messages;
+using Main.Slices.Messages.Messages;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
-namespace Main.Slices.Rota.Controllers
+namespace Main.Slices.Messages
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -13,35 +14,39 @@ namespace Main.Slices.Rota.Controllers
     public sealed class MessagesController : ApiControllerBase
     {
         private readonly IServiceManager _services;
-
-        public MessagesController(IServiceManager services) => _services = services;
-
+        private readonly IMongoDatabase _db;
+        //public MessagesController(IServiceManager services) => _services = services;
+        public MessagesController(IServiceManager services)
+        {
+            _services = services;
+          //  _db = MongoDbDriver._db;
+        }
         [HttpGet]
-        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        [HttpCacheValidation(MustRevalidate = true)]
+     //   [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+       // [HttpCacheValidation(MustRevalidate = true)]
         public async Task<IActionResult> GetMessageThreads([FromQuery] string id)
         {
-            var result = await _services.Message.RetrieveThreads(id);
+            var result = await _services.Message.RetrieveMessageThreads(id);
             return Ok(result);
         }
 
         [HttpGet]
         [Route("request")]
-        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        [HttpCacheValidation(MustRevalidate = true)]
+     //   [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        //[HttpCacheValidation(MustRevalidate = true)]
         public async Task<IActionResult> GetMessageRequests([FromQuery] string id)
         {
             var result = await _services.Message.RetrieveMessageRequests(id);
             return Ok(result);
+
         }
 
-        [HttpPut("request/respond/{actorId}/{targetId}")]
+        [HttpPut("request/respond/{actorId}/{targetId}/{accept}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> RespondToRequest(string actorId, string targetId, [FromBody] MessageRequestResponseDto response)
+        public async Task<IActionResult> RespondToRequest(string actorId, string targetId, bool accept)
         {
-            if (response.Response == string.Empty)
-                return BadRequest("Invalid Response");
-            await _services.Message.RespondToMessageRequest(actorId, targetId, response);
+
+            await _services.Message.AcceptMessageRequest(actorId, targetId, accept);
             return NoContent();
         }
 
@@ -49,22 +54,22 @@ namespace Main.Slices.Rota.Controllers
         [ServiceFilter(typeof(ValidateModelStateFilter))]
         public async Task<IActionResult> SendRequestMessage(string actorId, string targetId, [FromBody] MessageDto dto)
         {
-            await _services.Message.SendMessageRequest(actorId, targetId, dto.Body);
+            await _services.Message.SendMessageRequest(actorId, targetId, dto);
             return NoContent();
         }
 
-        [HttpPut("{targetId}")]
+        [HttpPut("{actorId}/{targetId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> AddMessageToThread(string targetId, [FromBody] MessageDto dto)
+        public async Task<IActionResult> AddMessageToThread(string actorId, string targetId, [FromBody] MessageDto dto)
         {
-            await _services.Message.AppendMessageThread(targetId, dto.SenderId, dto);
+            await _services.Message.SendMessage(actorId, targetId, dto);
             return NoContent();
         }
 
         [HttpDelete("{actorId}/{targetId}")]
         public async Task<IActionResult> DeleteMessageThread(string actorId, string targetId)
         {
-            await _services.Message.DeleteThread(actorId, targetId);
+            await _services.Message.DeleteKey(actorId, targetId);
             return NoContent();
         }
     }

@@ -3,8 +3,9 @@ using Homestead.Slices.Rota.Services;
 using Main.Global.Library.RabbitMQ;
 using Main.Slices.Accounts.EntityFramework_Jwt;
 using Main.Slices.Accounts.Services;
-using Main.Slices.Discovery;
 using Main.Slices.Discovery.DapperOrm.Context;
+using Main.Slices.Messages;
+using Main.Slices.Profile;
 using Main.Slices.Rota.Neo4J;
 using Main.Slices.Rota.Services;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ namespace Main.Global
             _profile = new Lazy<IProfileService>(() =>
                 new ProfileService(logger, searchCtx));
             _message = new Lazy<IMessageService>(() =>
-                new MessageService(logger, redis, Driver.Neo4jDriver));
+                new MessageService(logger, redis));
             _rota = new Lazy<IRotaService>(() =>
                 new RotaService(logger, redis, Driver.Neo4jDriver));
             _contract = new Lazy<IContractService>(() =>

@@ -1,4 +1,4 @@
-﻿namespace Main.Slices.Rota.Redis
+﻿namespace Main.Redis
 {
     public record RedisOptions
     {

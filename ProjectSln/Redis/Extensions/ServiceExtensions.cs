@@ -1,6 +1,7 @@
-﻿using StackExchange.Redis;
+﻿
+using StackExchange.Redis;
 
-namespace Main.Slices.Rota.Redis.Extensions
+namespace Main.Redis.Extensions
 {
     public static class ServiceExtensions
     {

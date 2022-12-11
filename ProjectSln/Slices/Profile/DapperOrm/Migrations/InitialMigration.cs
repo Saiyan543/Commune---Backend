@@ -38,6 +38,28 @@ namespace Main.Slices.Discovery.DapperOrm.Migrations
                 .WithColumn("Friday").AsBoolean().WithDefaultValue(false)
                 .WithColumn("Saturday").AsBoolean().WithDefaultValue(false)
                 .WithColumn("Sunday").AsBoolean().WithDefaultValue(false);
+
+
+            Create.Table("Threads")
+                .WithColumn("Id").AsString().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+                .WithColumn("InitiatorId").AsString().ForeignKey()
+                .WithColumn("ResponderId").AsString().ForeignKey()
+                .WithColumn("ThreadState").AsInt32().WithDefaultValue(0);
+
+
+            Create.Table("MessageRequests")
+                .WithColumn("Id").AsString().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+                .WithColumn("ReceiverId").AsString().ForeignKey()
+                .WithColumn("Message").AsString().Nullable()
+                .WithColumn("Date").AsDateTime().WithDefault(SystemMethods.CurrentUTCDateTime);
+
+            Create.Table("Messages")
+                .WithColumn("Id").AsString().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+                .WithColumn("ThreadId").AsString().ForeignKey()
+                .WithColumn("SenderId").AsString().ForeignKey()
+                .WithColumn("Body").AsString(int.MaxValue).Nullable()
+                .WithColumn("Date").AsDateTime().WithDefaultValue(SystemMethods.CurrentUTCDateTime);
+            
         }
     }
 }

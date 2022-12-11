@@ -4,12 +4,12 @@ using Main.Global.Library.ActionFilters;
 using Main.Global.Library.GlobalExceptionHandling.Extensions;
 using Main.Global.Library.MediaTypes;
 using Main.Global.Library.RabbitMQ.Extensions;
+using Main.Redis.Extensions;
 using Main.Slices.Accounts.EntityFramework_Jwt.Extensions;
 using Main.Slices.Discovery.DapperOrm;
 using Main.Slices.Discovery.DapperOrm.Extensions;
 using Main.Slices.Rota;
 using Main.Slices.Rota.Neo4J.Extensions;
-using Main.Slices.Rota.Redis.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 

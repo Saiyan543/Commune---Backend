@@ -10,7 +10,7 @@ using Main.Slices.Discovery.Models.Dtos;
 using Main.Slices.Discovery.Models.Responses;
 using System.Data;
 
-namespace Main.Slices.Discovery
+namespace Main.Slices.Profile
 {
     public interface IProfileService
     {
