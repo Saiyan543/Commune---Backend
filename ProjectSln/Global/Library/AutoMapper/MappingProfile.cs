@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Main.Slices.Accounts.EntityFramework_Jwt;
+using Main.DataAccessConfig.EntityFramework_Jwt;
 using Main.Slices.Accounts.Models.Dtos;
-using Main.Slices.Discovery.Models.Dtos;
+using Main.Slices.Profile.Models.Dtos;
 
 namespace Main.Global.Library.AutoMapper
 {

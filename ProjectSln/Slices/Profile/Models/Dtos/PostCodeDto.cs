@@ -1,4 +1,4 @@
-﻿namespace Main.Slices.Discovery.Models.Dtos
+﻿namespace Main.Slices.Profile.Models.Dtos
 {
     public record struct PostcodeDto
     {
@@ -6,7 +6,7 @@
 
         public PostcodeDto(string PostCode)
         {
-            this.Value = PostCode;
+            Value = PostCode;
         }
 
         public bool ValidatePostCode() // proxy for real validation

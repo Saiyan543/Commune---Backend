@@ -1,4 +1,4 @@
 ﻿namespace Main.Slices.Rota.Models.Contracts
 {
-    public sealed record ContractDto(string OtherPartyId, string OtherPartyName);
+    public sealed record ContractDto(string Id, string Name);
 }

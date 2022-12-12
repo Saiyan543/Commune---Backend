@@ -1,5 +1,5 @@
-﻿using Main.Global.Library.ApiController.Responses;
-using Main.Slices.Accounts.EntityFramework_Jwt;
+﻿using Main.DataAccessConfig.EntityFramework_Jwt;
+using Main.Global.Library.ApiController.Responses;
 using Main.Slices.Accounts.Models.Dtos;
 using Main.Slices.Accounts.Models.Responses;
 using Microsoft.AspNetCore.Identity;

@@ -1,7 +1,7 @@
 ﻿using Main.Global.Helpers.Querying.Uri;
 using System.Text;
 
-namespace Main.Slices.Discovery
+namespace Main.Slices.Profile
 {
     public static class DynamicQueryBuilder
     {

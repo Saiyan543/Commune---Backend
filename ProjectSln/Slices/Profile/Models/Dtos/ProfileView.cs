@@ -1,4 +1,4 @@
-﻿namespace Main.Slices.Discovery.Models.Dtos
+﻿namespace Main.Slices.Profile.Models.Dtos
 {
     public record ProfileView
     {
@@ -12,5 +12,7 @@
         public bool Friday { get; init; }
         public bool Saturday { get; init; }
         public bool Sunday { get; init; }
+
+   
     }
 }

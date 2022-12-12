@@ -1,6 +1,6 @@
 ﻿using Main.Global.Library.ApiController.Responses;
 
-namespace Main.Slices.Discovery.Models.Responses
+namespace Main.Slices.Profile.Models.Responses
 {
     public class ProfileNotFoundResponse : NotFoundResponse
     {

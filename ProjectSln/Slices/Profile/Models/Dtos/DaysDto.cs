@@ -1,4 +1,4 @@
-﻿namespace Main.Slices.Discovery.Models.Dtos
+﻿namespace Main.Slices.Profile.Models.Dtos
 {
     public record DaysDto
     {

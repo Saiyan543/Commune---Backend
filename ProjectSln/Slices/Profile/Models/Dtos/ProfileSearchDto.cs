@@ -1,6 +1,6 @@
 ﻿using Main.Global.Helpers.Querying.Uri;
 
-namespace Main.Slices.Discovery.Models.Dtos
+namespace Main.Slices.Profile.Models.Dtos
 {
     public sealed record ProfileSearchDto : RequestParams
     {

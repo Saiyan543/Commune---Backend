@@ -1,5 +1,6 @@
-﻿using Main.Global.Helpers;
-using Main.Redis.Extensions;
+﻿using Main.DataAccessConfig.Redis.Extensions;
+using Main.Global.Helpers;
+using Main.Global.Library.ApiController.Responses;
 using Main.Slices.Rota.Models.Rota;
 using Neo4j.Driver;
 using StackExchange.Redis;
@@ -18,11 +19,11 @@ namespace Main.Slices.Rota.Services
 
         Task InitialiseRota(string id, string role);
 
-        Task ManipulateSchedule(string id, DateTime dtoDate, string serializedDto);
+        Task ManipulateSchedule(string id, DateTime day, string serializedDto);
 
         Task UpdateAttendance(string clubId, UpdateAttendanceDto model);
 
-        Task UpdateShiftDetails(string clubId, UpdateShiftDto dto);
+        Task DeleteShift(string clubId, DateTime date);
     }
 
     public class RotaService : IRotaService
@@ -38,14 +39,17 @@ namespace Main.Slices.Rota.Services
             _logger = logger;
         }
 
-        public async Task ManipulateSchedule(string id, DateTime dtoDate, string serializedDto) =>
-            await _redis.HashSetAsync(id, dtoDate.ToShortDateString(), serializedDto);
-
-        public async Task UpdateShiftDetails(string clubId, UpdateShiftDto dto)
+        public async Task ManipulateSchedule(string id, DateTime day, string serializedDto)
         {
-            var shift = await _redis.HashGetAsync(clubId, dto.Start.ToShortDateString()).ContinueWith(x => x.Result.Deserialize<Shift>());
-            shift.Status = dto.EventStatus;
-            await _redis.HashSetAsync(clubId, dto.Start.ToShortDateString(), shift.Serialize());
+            
+            await _redis.HashSetAsync(id, day.ToShortDateString(), serializedDto);
+           
+        }
+         
+        
+        public async Task DeleteShift(string clubId, DateTime date)
+        {
+            await _redis.HashSetAsync(clubId, date.ToShortDateString(), new NullShift().Serialize());
         }
 
         public async Task UpdateAttendance(string id, UpdateAttendanceDto dto)
@@ -114,7 +118,7 @@ namespace Main.Slices.Rota.Services
             }
             else if (role.Equals("Security"))
             {
-                for (int i = 0; i < 7; i++) { hash[i] = new HashEntry(DateTime.UtcNow.AddDays(i).ToShortDateString(), new Schedule_Club(null, null, default).Serialize()); }
+                for (int i = 0; i < 7; i++) { hash[i] = new HashEntry(DateTime.UtcNow.AddDays(i).ToShortDateString(), new NullShift().Serialize()); }
                 for (int i = 7; i < 14; i++) { hash[i] = new HashEntry(DateTime.UtcNow.AddDays(i).ToShortDateString(), new Schedule_Club(null, null, default).Serialize()); }
 
                 await _redis.HashSetAsync(id, hash);

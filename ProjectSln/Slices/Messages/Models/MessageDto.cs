@@ -1,9 +1,4 @@
-﻿namespace Main.Slices.Messages.Messages
+﻿namespace Main.Slices.Messages.Models
 {
-    public record MessageDto
-    {
-        public DateTime Date { get; init; }
-        public string SenderId { get; init; }
-        public string Body { get; init; }
-    }
+    public record MessageDto(DateTime Date, string SenderId, string Body);
 }

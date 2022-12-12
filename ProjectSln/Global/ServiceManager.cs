@@ -1,12 +1,10 @@
-﻿using Homestead.Slices.Accounts.Services.Account;
-using Homestead.Slices.Rota.Services;
+﻿using Main.DataAccessConfig.DapperOrm.Context;
+using Main.DataAccessConfig.EntityFramework_Jwt;
+using Main.DataAccessConfig.Neo4J;
 using Main.Global.Library.RabbitMQ;
-using Main.Slices.Accounts.EntityFramework_Jwt;
 using Main.Slices.Accounts.Services;
-using Main.Slices.Discovery.DapperOrm.Context;
 using Main.Slices.Messages;
 using Main.Slices.Profile;
-using Main.Slices.Rota.Neo4J;
 using Main.Slices.Rota.Services;
 using Microsoft.AspNetCore.Identity;
 using StackExchange.Redis;

@@ -1,13 +1,13 @@
 ﻿using Dapper;
+using Main.DataAccessConfig.DapperOrm.Context;
+using Main.DataAccessConfig.DapperOrm.Extensions;
 using Main.Global.Helpers;
 using Main.Global.Helpers.Location;
 using Main.Global.Helpers.Location.Coordinates;
 using Main.Global.Library.ApiController.Responses;
 using Main.Global.Library.AutoMapper;
-using Main.Slices.Discovery.DapperOrm.Context;
-using Main.Slices.Discovery.DapperOrm.Extensions;
-using Main.Slices.Discovery.Models.Dtos;
-using Main.Slices.Discovery.Models.Responses;
+using Main.Slices.Profile.Models.Dtos;
+using Main.Slices.Profile.Models.Responses;
 using System.Data;
 
 namespace Main.Slices.Profile

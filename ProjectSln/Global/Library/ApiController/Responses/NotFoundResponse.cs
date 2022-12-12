@@ -1,6 +1,6 @@
 ﻿namespace Main.Global.Library.ApiController.Responses
 {
-    public abstract class NotFoundResponse : BaseResponse
+    public  class NotFoundResponse : BaseResponse
     {
         public string Message { get; set; }
 

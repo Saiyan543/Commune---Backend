@@ -1,5 +1,5 @@
 using Main.Global.Helpers.Querying.Uri;
-using Main.Slices.Discovery;
+using Main.Slices.Profile;
 
 namespace Project_Tests
 {

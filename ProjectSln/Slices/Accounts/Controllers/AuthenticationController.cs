@@ -32,7 +32,7 @@ namespace Main.Slices.Accounts.Controllers
                 return BadRequest("Invalid password for Administrative registration.");
             }
 
-            var result = await _services.Account.RegisterUser(dto, "Admin");
+            var result = await _services.Account.RegisterUser(dto, "Administrator");
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -48,7 +48,7 @@ namespace Main.Slices.Accounts.Controllers
         [ServiceFilter(typeof(ValidateModelStateFilter))]
         public async Task<IActionResult> RegisterUserAccount([FromBody] UserForRegistrationDto dto)
         {
-            var role = Role.Switch(dto.RoleId);
+            var role = Enums.Switch(dto.RoleId);
             if (role.Equals(string.Empty) | role.Equals("Admin"))
                 return BadRequest("Invalid Role");
 

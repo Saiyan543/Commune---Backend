@@ -4,10 +4,12 @@
     {
         public DateTime? Start { get; init; }
         public DateTime? End { get; init; }
-        public ScheduleBase(DateTime? Start, DateTime? End)
+
+        public ScheduleBase( DateTime? Start, DateTime? End)
         {
             this.Start = Start;
             this.End = End;
+     
         }
     }
 }

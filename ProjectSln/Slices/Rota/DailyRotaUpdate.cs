@@ -1,9 +1,9 @@
-﻿using Main.Global.Helpers;
-using Main.Redis.Extensions;
+﻿using Main.DataAccessConfig.Neo4J;
+using Main.DataAccessConfig.Neo4J.Extensions;
+using Main.DataAccessConfig.Redis.Extensions;
+using Main.Global.Helpers;
 using Main.Slices.Rota.Models.Rota;
 using Main.Slices.Rota.Models.Rota.enums;
-using Main.Slices.Rota.Neo4J;
-using Main.Slices.Rota.Neo4J.Extensions;
 using Neo4j.Driver;
 using StackExchange.Redis;
 

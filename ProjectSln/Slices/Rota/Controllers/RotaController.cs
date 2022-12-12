@@ -29,19 +29,30 @@ namespace Main.Slices.Rota.Controllers
             return Ok(result);
         }
 
-        [HttpPut("schedule/security/{id}")]
-        public async Task<IActionResult> UpdateScheduleSec(string id, [FromBody] Schedule_Security dto)
+        //[HttpPut("schedule/security/{id}/{day}")]
+        //public async Task<IActionResult> UpdateScheduleSec(string id, [FromBody] Schedule_Security dto)
+        //{
+        //    if (day < 7 | day > 14)
+        //        return BadRequest("Invalid date");
+
+        //    await _services.Rota.ManipulateSchedule(id, dto.D, dto.Serialize());
+        //    return NoContent();
+        //}
+
+        [HttpPut("schedule/club/{id}")]
+        public async Task<IActionResult> UpdateSchedule(string id, [FromBody] UpdateSchedule_ClubDto dto)
         {
-            await _services.Rota.ManipulateSchedule(id, dto.Start.Value, dto.Serialize());
+          
+            if (validateScedule(dto.Date))
+                return BadRequest("Invalid date, schedules can be changed between 7-14 days from the current date.");
+            
+            await _services.Rota.ManipulateSchedule(id, dto.Date, dto.Serialize());
             return NoContent();
         }
 
-        [HttpPut("schedule/club/{id}")]
-        public async Task<IActionResult> UpdateSchedule(string id, [FromBody] Schedule_Club dto)
-        {
-            await _services.Rota.ManipulateSchedule(id, dto.Start.Value, dto.Serialize());
-            return NoContent();
-        }
+        Func<DateTime, bool> validateScedule = (date) => date > DateTime.UtcNow.AddDays(7) && date <= DateTime.UtcNow.AddDays(14);
+        Func<DateTime, bool> validateShift = (date) => date <= DateTime.UtcNow.AddDays(7) | date >= DateTime.UtcNow.AddMinutes(5);
+
 
         [HttpGet]
         [Route("shifts/security")]
@@ -60,9 +71,11 @@ namespace Main.Slices.Rota.Controllers
         }
 
         [HttpPut("shifts/{id}")]
-        public async Task<IActionResult> UpdateShift(string id, [FromBody] UpdateShiftDto dto)
+        public async Task<IActionResult> DeleteShift(string id, DeleteShiftDto dto)
         {
-            await _services.Rota.UpdateShiftDetails(id, dto);
+            if (validateScedule(dto.Date))
+                return BadRequest("Invalid date.");
+            await _services.Rota.DeleteShift(id, dto.Date);
             return NoContent();
         }
 

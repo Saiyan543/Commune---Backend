@@ -2,12 +2,6 @@
 {
     public record class RequestParams : RequestBase
     {
-        public RequestParams()
-        {
-            Booleans = Booleans;
-            Comparisons = Comparisons;
-        }
-
         public string Booleans { get; set; } = string.Empty;
 
         public ValueFilter[] Comparisons { get; set; } = Array.Empty<ValueFilter>();

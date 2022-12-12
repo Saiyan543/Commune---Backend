@@ -5,10 +5,11 @@ using Main.Global.Helpers.Location.Coordinates;
 using Main.Global.Helpers.Querying.Paging;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
-using Main.Slices.Discovery.Models.Dtos;
+using Main.Global.Library.AutoMapper;
+using Main.Slices.Profile.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Main.Slices.Discovery
+namespace Main.Slices.Profile
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,8 +26,9 @@ namespace Main.Slices.Discovery
             var result = await _services.Profile.GetProfile(id);
             if (!result.Success)
                 return ProcessError(result);
-
-            return Ok(result.GetResult<(ProfileView, PostcodeDto)>().ToTuple());
+            var view = result.GetResult<(ProfileView, PostcodeDto)>();
+            
+            return Ok(new ProfileWithPostCodeView(view.Item1, view.Item2.Value));
         }
 
         [HttpGet]

@@ -1,7 +1,8 @@
 ﻿using Main.Global;
 using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
-using Main.Slices.Messages.Messages;
+using Main.Global.Library.ApiController.Responses;
+using Main.Slices.Messages.Models;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -41,19 +42,20 @@ namespace Main.Slices.Messages
 
         }
 
-        [HttpPut("request/respond/{actorId}/{targetId}/{accept}")]
+        [HttpPut("request/respond/{actorId}/{actorName}/{targetId}/{targetName}/{accept}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> RespondToRequest(string actorId, string targetId, bool accept)
+        public async Task<IActionResult> RespondToRequest(string actorId, string actorName, string targetId, string targetName, bool accept)
         {
 
-            await _services.Message.AcceptMessageRequest(actorId, targetId, accept);
+            await _services.Message.AcceptMessageRequest(actorId, actorName, targetId, targetName, accept);
             return NoContent();
         }
 
         [HttpPut("request/send/{actorId}/{targetId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> SendRequestMessage(string actorId, string targetId, [FromBody] MessageDto dto)
+        public async Task<IActionResult> SendRequestMessage(string actorId, string targetId, [FromBody] MessageRequestDto dto)
         {
+  
             await _services.Message.SendMessageRequest(actorId, targetId, dto);
             return NoContent();
         }

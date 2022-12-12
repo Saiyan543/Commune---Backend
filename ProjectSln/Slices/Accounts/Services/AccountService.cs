@@ -1,16 +1,16 @@
-﻿using Main.Global.Helpers;
+﻿using Main.DataAccessConfig.EntityFramework_Jwt;
+using Main.DataAccessConfig.EntityFramework_Jwt.Extensions;
+using Main.Global.Helpers;
 using Main.Global.Library.ApiController.Responses;
 using Main.Global.Library.AutoMapper;
 using Main.Global.Library.RabbitMQ;
 using Main.Global.Library.RabbitMQ.Messages;
-using Main.Slices.Accounts.EntityFramework_Jwt;
-using Main.Slices.Accounts.EntityFramework_Jwt.Extensions;
 using Main.Slices.Accounts.Models.Dtos;
 using Main.Slices.Accounts.Models.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Homestead.Slices.Accounts.Services.Account
+namespace Main.Slices.Accounts.Services
 {
     public interface IAccountService
     {
@@ -95,9 +95,11 @@ namespace Homestead.Slices.Accounts.Services.Account
             {
                 await _userManager.DeleteAsync(user);
                 return IdentityResult.Failed(roleResult.Errors.ToArray());
+            }if (role != "Administrator")
+            {
+                _logger.Information($"User Account Created at {DateTime.Now} with Id {user.Id}");
+                _publisher.Publish(new RegisterMessage(user.Id, user.UserName, role));
             }
-            _logger.Information($"User Account Created at {DateTime.Now} with Id {user.Id}");
-            _publisher.Publish(new RegisterMessage(user.Id, user.UserName, role));
             return result;
         }
 

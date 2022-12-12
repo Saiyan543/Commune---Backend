@@ -27,6 +27,8 @@ namespace Main.Global.Library.RabbitMQ.Subscribers
                 await services.Contract.DeleteNode(content.ProfileId);
 
                 await services.Rota.DeleteRota(content.ProfileId);
+
+               // await services.Message.DeleteKey()
             }
         }
     }

@@ -16,8 +16,8 @@ namespace Main.Slices.Rota.Controllers
         public ContractController(IServiceManager services) => _services = services;
 
         [HttpGet]
-        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        [HttpCacheValidation(MustRevalidate = false)]
+        //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        //[HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> RetrieveContracts([FromQuery] string id)
         {
             var result = await _services.Contract.RetrieveContracts(id);
@@ -26,21 +26,22 @@ namespace Main.Slices.Rota.Controllers
 
         [HttpGet]
         [Route("requests")]
-        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        [HttpCacheValidation(MustRevalidate = false)]
+        //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        //[HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> RetrieveContractRequests([FromQuery] string id)
         {
             var result = await _services.Contract.RetrieveContractRequests(id);
             return Ok(result);
         }
 
-        [HttpPut("{actorId}/{targetId}")]
+        [HttpPut("{actorId}/{targetId}/{responseId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> RespondToContractRequest(string actorId, string targetId, [FromBody] ContractRequestResponseDto dto)
+        public async Task<IActionResult> RespondToContractRequest(string actorId, string targetId, int responseId)
         {
-            if (dto.Response == string.Empty)
+            var response = Enums.ContractResponse(responseId);
+            if (response == string.Empty)
                 return BadRequest("Invalid Response");
-            await _services.Contract.RespondToContractRequest(actorId, targetId, dto.Response);
+            await _services.Contract.RespondToContractRequest(actorId, targetId, response);
             return NoContent();
         }
 
@@ -48,7 +49,7 @@ namespace Main.Slices.Rota.Controllers
         public async Task<IActionResult> SendContractRequest(string actorId, string targetId)
         {
             await _services.Contract.SendContractRequest(actorId, targetId);
-            return StatusCode(201);
+            return NoContent();
         }
 
         [HttpDelete("{actorId}/{targetId}")]
