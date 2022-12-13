@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Homestead.Migrations
+namespace Main.Migrations
 {
     public partial class init : Migration
     {
@@ -160,17 +161,17 @@ namespace Homestead.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "34528ca8-094d-4659-9099-1f84ba3dc0ef", "fee87fc1-d92a-4bde-b4e2-7a27fb6ceab7", "Company", "COMPANY" });
+                values: new object[] { "45f58547-7f42-4a00-9b8c-6f84dfc2211e", "88c33821-70d9-4fbb-9939-a6e799d7060e", "Club", "CLUB" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "87ca35e0-ccbc-4133-ad2a-89ef2576472b", "b1a4d6bc-e7dd-46de-8d83-ca24d64426ce", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "8bdc61ea-050e-42c6-ab6a-13de2fbe071a", "2568cf53-f077-42af-8e6a-e5636e7cfcef", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b85da541-637c-4866-a64d-7e559f125c2e", "121889fa-4622-4e03-aa9e-23ab8bcb64f6", "Security", "SECURITY" });
+                values: new object[] { "f2b7371c-92dc-488e-81ec-d92680f2cd73", "f74e1d67-7ef2-4f80-b17e-2247b9e30c2b", "Security", "SECURITY" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -8,6 +8,7 @@ namespace Main.Slices.Accounts.Models.Dtos
         [Required]
         public string CurrentPassword { get; init; } = string.Empty;
         [Required]
+        [DataType(DataType.Password)]
         public string NewPassword { get; init; } = string.Empty;
         [DataType(DataType.Password)]
         [Compare("NewPassword", ErrorMessage = "Passwords do not match")]

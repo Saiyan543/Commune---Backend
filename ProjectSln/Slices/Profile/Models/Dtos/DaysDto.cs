@@ -1,4 +1,6 @@
-﻿namespace Main.Slices.Profile.Models.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Main.Slices.Profile.Models.Dtos
 {
     public record DaysDto
     {

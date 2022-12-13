@@ -29,9 +29,9 @@ namespace Main.Slices.Accounts.Controllers
             if (dto.AdminPassword != _configuration["AdminPassword"])
             {
                 _logger.Warning($"Invalid Administrative Register Attempt: {dto.Email}");
-                return BadRequest("Invalid password for Administrative registration.");
+                return BadRequest("Administrative registration failed.");
             }
-
+            
             var result = await _services.Account.RegisterUser(dto, "Administrator");
             if (!result.Succeeded)
             {
@@ -49,8 +49,8 @@ namespace Main.Slices.Accounts.Controllers
         public async Task<IActionResult> RegisterUserAccount([FromBody] UserForRegistrationDto dto)
         {
             var role = Enums.Switch(dto.RoleId);
-            if (role.Equals(string.Empty) | role.Equals("Admin"))
-                return BadRequest("Invalid Role");
+            if (role.Equals("Administrator"))
+                return BadRequest("Invalid role for registration. Admin registration is done through the admin route.");
 
             var result = await _services.Account.RegisterUser(dto, role);
             if (!result.Succeeded)
@@ -66,6 +66,7 @@ namespace Main.Slices.Accounts.Controllers
 
         [HttpPost]
         [Route("login")]
+        [ServiceFilter(typeof(ValidateModelStateFilter))]
         public async Task<IActionResult> AuthenticateUser([FromBody] UserForAuthenticationDto dto)
         {
             var userId = await _services.Authentication.ValidateUser(dto);
@@ -81,6 +82,7 @@ namespace Main.Slices.Accounts.Controllers
 
         [HttpPost]
         [Route("refresh")]
+        [ServiceFilter(typeof(ValidateModelStateFilter))]
         public async Task<IActionResult> Refresh([FromBody] TokenDto dto)
         {
             var result = await _services.Authentication.RefreshToken(dto);

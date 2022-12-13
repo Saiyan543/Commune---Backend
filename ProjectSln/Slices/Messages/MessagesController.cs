@@ -42,29 +42,29 @@ namespace Main.Slices.Messages
 
         }
 
-        [HttpPut("request/respond/{actorId}/{actorName}/{targetId}/{targetName}/{accept}")]
+        [HttpPut("request/respond/{actorId}/{targetId}/{accept}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> RespondToRequest(string actorId, string actorName, string targetId, string targetName, bool accept)
+        public async Task<IActionResult> RespondToRequest(string actorId, string targetId, bool accept)
         {
 
-            await _services.Message.AcceptMessageRequest(actorId, actorName, targetId, targetName, accept);
+            await _services.Message.AcceptMessageRequest(actorId,  targetId, accept);
             return NoContent();
         }
 
         [HttpPut("request/send/{actorId}/{targetId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> SendRequestMessage(string actorId, string targetId, [FromBody] MessageRequestDto dto)
+        public async Task<IActionResult> SendRequestMessage(string actorId, string targetId, [FromBody] SubmitMessageDto dto)
         {
   
-            await _services.Message.SendMessageRequest(actorId, targetId, dto);
+            await _services.Message.SendMessageRequest(actorId, targetId, new MessageDto(dto));
             return NoContent();
         }
 
         [HttpPut("{actorId}/{targetId}")]
         [ServiceFilter(typeof(ValidateModelStateFilter))]
-        public async Task<IActionResult> AddMessageToThread(string actorId, string targetId, [FromBody] MessageDto dto)
+        public async Task<IActionResult> AddMessageToThread(string actorId, string targetId, [FromBody] SubmitMessageDto dto)
         {
-            await _services.Message.SendMessage(actorId, targetId, dto);
+            await _services.Message.SendMessage(actorId, targetId, new MessageDto(dto));
             return NoContent();
         }
 

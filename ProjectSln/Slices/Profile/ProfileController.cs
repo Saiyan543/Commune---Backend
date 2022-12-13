@@ -7,6 +7,7 @@ using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
 using Main.Global.Library.AutoMapper;
 using Main.Slices.Profile.Models.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Main.Slices.Profile
@@ -14,6 +15,7 @@ namespace Main.Slices.Profile
     [Route("api/[controller]")]
     [ApiController]
     [ResponseCache(CacheProfileName = "120SecondsDuration")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public sealed class ProfileController : ApiControllerBase
     {
         private readonly IServiceManager _services;
@@ -28,7 +30,7 @@ namespace Main.Slices.Profile
                 return ProcessError(result);
             var view = result.GetResult<(ProfileView, PostcodeDto)>();
             
-            return Ok(new ProfileWithPostCodeView(view.Item1, view.Item2.Value));
+            return Ok(new ProfileWithPostCodeView(view.Item1, view.Item2.Postcode));
         }
 
         [HttpGet]
@@ -72,7 +74,7 @@ namespace Main.Slices.Profile
         {
             if (!dto.ValidatePostCode())
                 return BadRequest("Invalid Postcode");
-            await _services.Profile.UpdateLocation(id, GeoLocation.GetCoordinateFromPostCode(dto.Value));
+            await _services.Profile.UpdateLocation(id, GeoLocation.GetCoordinateFromPostCode(dto.Postcode));
             return NoContent();
         }
     }

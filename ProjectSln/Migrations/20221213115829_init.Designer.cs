@@ -4,16 +4,18 @@ using Main.DataAccessConfig.EntityFramework_Jwt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Homestead.Migrations
+namespace Main.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20221213115829_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,22 +132,22 @@ namespace Homestead.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3e5c678f-60fb-4773-bdc6-32a311b3c463",
-                            ConcurrencyStamp = "b9bc2b69-1b4f-4e2b-9d9a-cff624383daf",
+                            Id = "f2b7371c-92dc-488e-81ec-d92680f2cd73",
+                            ConcurrencyStamp = "f74e1d67-7ef2-4f80-b17e-2247b9e30c2b",
                             Name = "Security",
                             NormalizedName = "SECURITY"
                         },
                         new
                         {
-                            Id = "ec1d9a61-20cb-4ef8-9a23-3ba3b1111557",
-                            ConcurrencyStamp = "b4dde19e-365c-4641-b41b-e9144ab7f43d",
+                            Id = "45f58547-7f42-4a00-9b8c-6f84dfc2211e",
+                            ConcurrencyStamp = "88c33821-70d9-4fbb-9939-a6e799d7060e",
                             Name = "Club",
                             NormalizedName = "CLUB"
                         },
                         new
                         {
-                            Id = "2495b829-59a2-4225-bd06-2d07ea5b6f1b",
-                            ConcurrencyStamp = "e54cb830-40af-4b79-81f4-5deab01a725b",
+                            Id = "8bdc61ea-050e-42c6-ab6a-13de2fbe071a",
+                            ConcurrencyStamp = "2568cf53-f077-42af-8e6a-e5636e7cfcef",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

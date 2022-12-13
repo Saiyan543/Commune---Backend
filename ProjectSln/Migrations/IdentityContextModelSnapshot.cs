@@ -4,18 +4,16 @@ using Main.DataAccessConfig.EntityFramework_Jwt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Homestead.Migrations
+namespace Main.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20221206202204_fixRoles")]
-    partial class fixRoles
+    partial class IdentityContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +22,7 @@ namespace Homestead.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", b =>
+            modelBuilder.Entity("Main.DataAccessConfig.EntityFramework_Jwt.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -132,22 +130,22 @@ namespace Homestead.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0b38c7cf-f3ba-4cd5-945c-d0e425a77740",
-                            ConcurrencyStamp = "6ffda52d-278c-422d-ac12-8fa1abd0dccc",
+                            Id = "f2b7371c-92dc-488e-81ec-d92680f2cd73",
+                            ConcurrencyStamp = "f74e1d67-7ef2-4f80-b17e-2247b9e30c2b",
                             Name = "Security",
                             NormalizedName = "SECURITY"
                         },
                         new
                         {
-                            Id = "aabe682e-5ee0-4f2c-add7-8f6309795a58",
-                            ConcurrencyStamp = "b011d71a-775d-4e0e-ae4f-25f5487f3548",
+                            Id = "45f58547-7f42-4a00-9b8c-6f84dfc2211e",
+                            ConcurrencyStamp = "88c33821-70d9-4fbb-9939-a6e799d7060e",
                             Name = "Club",
                             NormalizedName = "CLUB"
                         },
                         new
                         {
-                            Id = "d122d7ad-1c96-43f8-98ba-cb1999250044",
-                            ConcurrencyStamp = "af14ad72-eadd-466b-93e4-936520185121",
+                            Id = "8bdc61ea-050e-42c6-ab6a-13de2fbe071a",
+                            ConcurrencyStamp = "2568cf53-f077-42af-8e6a-e5636e7cfcef",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -270,7 +268,7 @@ namespace Homestead.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.DataAccessConfig.EntityFramework_Jwt.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,7 +277,7 @@ namespace Homestead.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.DataAccessConfig.EntityFramework_Jwt.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,7 +292,7 @@ namespace Homestead.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.DataAccessConfig.EntityFramework_Jwt.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -303,7 +301,7 @@ namespace Homestead.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Main.Slices.Accounts.Dependencies.IdentityCore.Configuration.Models.DbModels.User", null)
+                    b.HasOne("Main.DataAccessConfig.EntityFramework_Jwt.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -26,6 +26,7 @@ namespace Main.Global.Library.RabbitMQ.Subscribers
                 await services.Profile.InitialiseProfile(parameters, parameters, parameters);
                 await services.Contract.InitialiseNode(content.ProfileId, content.UserName, content.Role);
                 await services.Rota.InitialiseRota(content.ProfileId, content.Role);
+                await services.Message.Initialise(content.ProfileId, content.UserName);
             }
         }
     }

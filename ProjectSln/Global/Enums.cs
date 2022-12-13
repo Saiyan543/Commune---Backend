@@ -6,10 +6,10 @@
         {
             return roleId switch
             {
-                0 => "Security",
-                1 => "Club",
-                2 => "Administrator",
-                _ => string.Empty
+                1 => "Security",
+                2 => "Club",
+                3 => "Administrator",
+                _ => throw new InvalidOperationException()
             };
         }
 

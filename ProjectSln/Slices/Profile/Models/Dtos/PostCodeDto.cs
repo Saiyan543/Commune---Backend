@@ -2,20 +2,20 @@
 {
     public record struct PostcodeDto
     {
-        public string Value { get; init; }
+        public string Postcode { get; init; }
 
         public PostcodeDto(string PostCode)
         {
-            Value = PostCode;
+            Postcode = PostCode;
         }
 
         public bool ValidatePostCode() // proxy for real validation
         {
-            if (string.IsNullOrEmpty(Value))
+            if (string.IsNullOrEmpty(Postcode))
                 return false;
-            if (Value.Length > 8 && Value.Length < 6)
+            if (Postcode.Length > 8 && Postcode.Length < 6)
                 return false;
-            if (!Value.Contains(" "))
+            if (!Postcode.Contains(" "))
                 return false;
             return true;
         }

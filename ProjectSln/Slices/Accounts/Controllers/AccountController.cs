@@ -5,6 +5,7 @@ using Main.Global.Library.ActionFilters;
 using Main.Global.Library.ApiController;
 using Main.Slices.Accounts.Models.Dtos;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Main.Slices.Accounts.Controllers
@@ -12,6 +13,7 @@ namespace Main.Slices.Accounts.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ResponseCache(CacheProfileName = "120SecondsDuration")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public sealed class AccountController : ApiControllerBase
     {
         private readonly IServiceManager _services;
@@ -20,7 +22,7 @@ namespace Main.Slices.Accounts.Controllers
 
         [HttpGet]
         [Route("Search")]
-        //      [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Administrator", AuthenticationSchemes = "Bearer")]
         [ServiceFilter(typeof(ValidateMediaTypeFilter))]
         public async Task<IActionResult> SearchUsers([FromQuery] IQueryableDto dto)
         {

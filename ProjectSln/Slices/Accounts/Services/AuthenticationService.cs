@@ -77,7 +77,7 @@ namespace Main.Slices.Accounts.Services
                 return new RefreshTokenInvalidResponse();
 
             var user = await _userManager.FindByNameAsync(principal.Identity.Name);
-            if (user == null || user.RefreshToken != tokenDto.RefreshToken ||
+            if (user.RefreshToken != tokenDto.RefreshToken ||
                user.RefreshTokenExpiryTime <= DateTime.UtcNow)
                 return new RefreshTokenExpiredResponse(user.RefreshTokenExpiryTime);
 
